@@ -1,14 +1,15 @@
 from typing import TypedDict, List, Dict
 
-class ContenidoPlataforma(TypedDict):
-    texto: str
-    prompt_imagen: str
-    aprobado_por_ia: bool
-    errores: List[str]
+class PlatformContent(TypedDict):
+    text: str
+    image_prompt: str
+    is_valid: bool
+    errors: List[str]
 
-class EstadoProyecto(TypedDict):
-    prompt_usuario: str
-    plataformas_destino: List[str]
-    publicaciones: Dict[str, ContenidoPlataforma]
-    intentos: int
-    aprobado_por_humano: bool
+class MultiPlatformState(TypedDict):
+    user_prompt: str
+    platforms: List[str]
+    outputs: Dict[str, PlatformContent]
+    retry_count: int
+    platform_feedback: Dict[str, str]
+    is_approved: bool

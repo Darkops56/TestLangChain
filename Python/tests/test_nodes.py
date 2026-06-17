@@ -1,84 +1,113 @@
 from unittest.mock import MagicMock, patch
-from src.nodes import nodo_generador_creativo, nodo_corrector_economico
-from src.state import EstadoProyecto, ContenidoPlataforma
+from src.nodes import (
+    generator_node, 
+    nodo_corrector_economico, 
+    MultiPlatformOutput, 
+    GmailOutput
+)
+from src.state import MultiPlatformState, PlatformContent
 
-@patch("src.nodes.llm_creativo")
-def test_nodo_generador_creativo_incrementa_intentos(mock_llm_creativo):
-    mock_response = MagicMock()
-    mock_response.content = '{"gmail": {"texto": "Diseño hexagonal en IA", "prompt_imagen": "imagen de engranajes"}}'
-    mock_llm_creativo.invoke.return_value = mock_response
+@patch("src.nodes.llm_estructurado")
+def test_generator_node_increments_retry_count(mock_llm_structured):
+    # Setup mock response matching the new Pydantic schema
+    mock_response = MultiPlatformOutput(
+        gmail=GmailOutput(text="Hexagonal design in IA", image_prompt="image of gears")
+    )
+    mock_llm_structured.invoke.return_value = mock_response
 
-    state_inicial: EstadoProyecto = {
-        "prompt_usuario": "Diseño hexagonal",
-        "plataformas_destino": ["gmail"],
-        "publicaciones": {},
-        "intentos": 0,
-        "aprobado_por_humano": False
+    initial_state: MultiPlatformState = {
+        "user_prompt": "Hexagonal design",
+        "platforms": ["gmail"],
+        "outputs": {},
+        "retry_count": 0,
+        "platform_feedback": {},
+        "is_approved": False
     }
 
-    output = nodo_generador_creativo(state_inicial)
-    assert output["intentos"] == 1
-    assert "gmail" in output["publicaciones"]
-    assert output["publicaciones"]["gmail"]["texto"] == "Diseño hexagonal en IA"
-    assert output["publicaciones"]["gmail"]["prompt_imagen"] == "imagen de engranajes"
-    assert output["publicaciones"]["gmail"]["aprobado_por_ia"] is False
-    assert output["publicaciones"]["gmail"]["errores"] == []
-    mock_llm_creativo.invoke.assert_called_once()
+    output = generator_node(initial_state)
+    assert output["retry_count"] == 1
+    assert "gmail" in output["outputs"]
+    assert output["outputs"]["gmail"]["text"] == "Hexagonal design in IA"
+    assert output["outputs"]["gmail"]["image_prompt"] == "image of gears"
+    assert output["outputs"]["gmail"]["is_valid"] is False
+    assert output["outputs"]["gmail"]["errors"] == []
+    mock_llm_structured.invoke.assert_called_once()
 
 
-def test_nodo_corrector_economico_aprueba():
-    state: EstadoProyecto = {
-        "prompt_usuario": "Test",
-        "plataformas_destino": ["gmail", "tiktok"],
-        "publicaciones": {
-            "gmail": ContenidoPlataforma(
-                texto="Texto válido con IA para Gmail.",
-                prompt_imagen="imagen",
-                aprobado_por_ia=False,
-                errores=[]
+def test_economic_corrector_node_approves():
+    state: MultiPlatformState = {
+        "user_prompt": "Test",
+        "platforms": ["gmail", "tiktok"],
+        "outputs": {
+            "gmail": PlatformContent(
+                text="Valid text with IA for Gmail.",
+                image_prompt="image concept",
+                is_valid=False,
+                errors=[]
             ),
-            "tiktok": ContenidoPlataforma(
-                texto="IA es genial",
-                prompt_imagen="imagen",
-                aprobado_por_ia=False,
-                errores=[]
+            "tiktok": PlatformContent(
+                text="IA is cool #tiktok",
+                image_prompt="image concept",
+                is_valid=False,
+                errors=[]
             )
         },
-        "intentos": 1,
-        "aprobado_por_humano": False
+        "retry_count": 1,
+        "platform_feedback": {"gmail": "Falta la palabra IA", "tiktok": "Falta hashtag"},
+        "is_approved": False
     }
 
     output = nodo_corrector_economico(state)
-    assert output["publicaciones"]["gmail"]["aprobado_por_ia"] is True
-    assert len(output["publicaciones"]["gmail"]["errores"]) == 0
-    assert output["publicaciones"]["tiktok"]["aprobado_por_ia"] is True
-    assert len(output["publicaciones"]["tiktok"]["errores"]) == 0
+    assert output["outputs"]["gmail"]["is_valid"] is True
+    assert len(output["outputs"]["gmail"]["errors"]) == 0
+    assert output["outputs"]["tiktok"]["is_valid"] is True
+    assert len(output["outputs"]["tiktok"]["errors"]) == 0
+    assert "gmail" not in output["platform_feedback"]
+    assert "tiktok" not in output["platform_feedback"]
 
 
-def test_nodo_corrector_economico_rechaza():
-    state: EstadoProyecto = {
-        "prompt_usuario": "Test",
-        "plataformas_destino": ["gmail", "tiktok"],
-        "publicaciones": {
-            "gmail": ContenidoPlataforma(
-                texto="Texto sin palabra clave",
-                prompt_imagen="imagen",
-                aprobado_por_ia=False,
-                errores=[]
+def test_economic_corrector_node_rejects():
+    state: MultiPlatformState = {
+        "user_prompt": "Test",
+        "platforms": ["gmail", "tiktok", "whatsapp"],
+        "outputs": {
+            "gmail": PlatformContent(
+                text="Text without the required keyword.",
+                image_prompt="image concept",
+                is_valid=False,
+                errors=[]
             ),
-            "tiktok": ContenidoPlataforma(
-                texto="a" * 200,
-                prompt_imagen="imagen",
-                aprobado_por_ia=False,
-                errores=[]
+            "tiktok": PlatformContent(
+                text="a" * 200, # Too long
+                image_prompt="image concept",
+                is_valid=False,
+                errors=[]
+            ),
+            "whatsapp": PlatformContent(
+                text="Message containing <p>HTML tags</p>", # HTML tags not allowed
+                image_prompt="image concept",
+                is_valid=False,
+                errors=[]
             )
         },
-        "intentos": 1,
-        "aprobado_por_humano": False
+        "retry_count": 1,
+        "platform_feedback": {},
+        "is_approved": False
     }
 
     output = nodo_corrector_economico(state)
-    assert output["publicaciones"]["gmail"]["aprobado_por_ia"] is False
-    assert any("IA" in e for e in output["publicaciones"]["gmail"]["errores"])
-    assert output["publicaciones"]["tiktok"]["aprobado_por_ia"] is False
-    assert any("150" in e for e in output["publicaciones"]["tiktok"]["errores"])
+    # gmail validation checks
+    assert output["outputs"]["gmail"]["is_valid"] is False
+    assert "gmail" in output["platform_feedback"]
+    assert "Falta la palabra" in output["platform_feedback"]["gmail"]
+
+    # tiktok validation checks
+    assert output["outputs"]["tiktok"]["is_valid"] is False
+    assert "tiktok" in output["platform_feedback"]
+    assert "límite de 150" in output["platform_feedback"]["tiktok"]
+    assert "hashtag" in output["platform_feedback"]["tiktok"]
+
+    # whatsapp validation checks
+    assert output["outputs"]["whatsapp"]["is_valid"] is False
+    assert "whatsapp" in output["platform_feedback"]
+    assert "HTML" in output["platform_feedback"]["whatsapp"]
