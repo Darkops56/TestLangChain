@@ -1,0 +1,1277 @@
+{
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\.opencode\\opencode.json": {
+    "mtime": 1781658377.9266515,
+    "ast_hash": "1efe24ecf938911d4f23e4b1c6ec91f7",
+    "semantic_hash": "1efe24ecf938911d4f23e4b1c6ec91f7"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\.opencode\\package.json": {
+    "mtime": 1781658403.380318,
+    "ast_hash": "24478eaec7f80842193599e20ed2e5ae",
+    "semantic_hash": "24478eaec7f80842193599e20ed2e5ae"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\.opencode\\plugins\\graphify.js": {
+    "mtime": 1781658451.6698112,
+    "ast_hash": "32b67963417a30cb80544e0b2a56a98d",
+    "semantic_hash": "32b67963417a30cb80544e0b2a56a98d"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\calcom-entrypoint.sh": {
+    "mtime": 1781651509.916916,
+    "ast_hash": "83c89addcb43add1d9371038445f80d6",
+    "semantic_hash": "83c89addcb43add1d9371038445f80d6"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\init-multiple-dbs.sh": {
+    "mtime": 1781651509.9199164,
+    "ast_hash": "09227ea1efc0700bc46ef9be1aeea0d9",
+    "semantic_hash": "09227ea1efc0700bc46ef9be1aeea0d9"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\__init__.py": {
+    "mtime": 1781651509.9839184,
+    "ast_hash": "b3b998f912040289e7077d479df26b5e",
+    "semantic_hash": "b3b998f912040289e7077d479df26b5e"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\config\\__init__.py": {
+    "mtime": 1781651509.9839184,
+    "ast_hash": "9d3af823b96d9e31907add5da6c29693",
+    "semantic_hash": "9d3af823b96d9e31907add5da6c29693"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\config\\content_preferences.py": {
+    "mtime": 1781651509.984918,
+    "ast_hash": "509139011abf764a22df921c431d0eba",
+    "semantic_hash": "509139011abf764a22df921c431d0eba"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\config\\prompts.py": {
+    "mtime": 1781651509.984918,
+    "ast_hash": "286f5a0275f83c9fa32dc95e10b6666f",
+    "semantic_hash": "286f5a0275f83c9fa32dc95e10b6666f"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\config\\settings.py": {
+    "mtime": 1781651509.9859183,
+    "ast_hash": "10f27871cc8882e42644968e8e829f6a",
+    "semantic_hash": "10f27871cc8882e42644968e8e829f6a"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\config\\visual_preferences.py": {
+    "mtime": 1781651509.9859183,
+    "ast_hash": "70326ef5dd8d66234016b12aac0a08f2",
+    "semantic_hash": "70326ef5dd8d66234016b12aac0a08f2"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\graph\\__init__.py": {
+    "mtime": 1781651509.9869184,
+    "ast_hash": "d0399fa8d5976fd4352a66a82c766c4e",
+    "semantic_hash": "d0399fa8d5976fd4352a66a82c766c4e"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\graph\\nodes\\__init__.py": {
+    "mtime": 1781651509.9869184,
+    "ast_hash": "fd6059c37c2bfdb544b58fee49a737bb",
+    "semantic_hash": "fd6059c37c2bfdb544b58fee49a737bb"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\graph\\nodes\\copywriter.py": {
+    "mtime": 1781651509.9869184,
+    "ast_hash": "df748d99f138a218137c45ebc9e5ebdb",
+    "semantic_hash": "df748d99f138a218137c45ebc9e5ebdb"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\graph\\nodes\\designer.py": {
+    "mtime": 1781651509.987918,
+    "ast_hash": "e3c2fc500694494fea964a371fafb4a6",
+    "semantic_hash": "e3c2fc500694494fea964a371fafb4a6"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\graph\\nodes\\evaluator.py": {
+    "mtime": 1781651509.987918,
+    "ast_hash": "f5576ba542e2219f6ad11801f0aee867",
+    "semantic_hash": "f5576ba542e2219f6ad11801f0aee867"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\graph\\nodes\\publisher.py": {
+    "mtime": 1781651509.9889185,
+    "ast_hash": "a004bcabdf8854f44bad0c0f2f3709c8",
+    "semantic_hash": "a004bcabdf8854f44bad0c0f2f3709c8"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\graph\\nodes\\responder.py": {
+    "mtime": 1781651509.9889185,
+    "ast_hash": "0006f44888267edf9c4c01ffcd5e6ab5",
+    "semantic_hash": "0006f44888267edf9c4c01ffcd5e6ab5"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\graph\\nodes\\strategist.py": {
+    "mtime": 1781651509.989915,
+    "ast_hash": "809504a9988a393a4d7c0a2e3e6fc399",
+    "semantic_hash": "809504a9988a393a4d7c0a2e3e6fc399"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\graph\\review_workflow.py": {
+    "mtime": 1781651509.989915,
+    "ast_hash": "4ee8b9830f68dce9a8777405a7cea057",
+    "semantic_hash": "4ee8b9830f68dce9a8777405a7cea057"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\graph\\state.py": {
+    "mtime": 1781651509.989915,
+    "ast_hash": "7808fe6334fcc389db054357376324e6",
+    "semantic_hash": "7808fe6334fcc389db054357376324e6"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\graph\\workflow.py": {
+    "mtime": 1781651509.9909139,
+    "ast_hash": "79e25e18f1d00224e86e9f7e2728a409",
+    "semantic_hash": "79e25e18f1d00224e86e9f7e2728a409"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\main.py": {
+    "mtime": 1781651509.9909139,
+    "ast_hash": "e67061a4043e9fb8c09b03f31a6a27f6",
+    "semantic_hash": "e67061a4043e9fb8c09b03f31a6a27f6"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\models\\__init__.py": {
+    "mtime": 1781651509.9919147,
+    "ast_hash": "072219e82b3a634ddadf87b9bafe567f",
+    "semantic_hash": "072219e82b3a634ddadf87b9bafe567f"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\models\\schemas.py": {
+    "mtime": 1781651509.9919147,
+    "ast_hash": "78124cc4876806dda45aceea31121387",
+    "semantic_hash": "78124cc4876806dda45aceea31121387"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\nurturing\\__init__.py": {
+    "mtime": 1781651509.9929152,
+    "ast_hash": "c7db1cc6770582ce16d6acf3f95e2208",
+    "semantic_hash": "c7db1cc6770582ce16d6acf3f95e2208"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\nurturing\\_legacy\\__init__.py": {
+    "mtime": 1781651509.9929152,
+    "ast_hash": "772468efd730950213bb5d849189b651",
+    "semantic_hash": "772468efd730950213bb5d849189b651"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\nurturing\\_legacy\\workflow.py": {
+    "mtime": 1781651509.993919,
+    "ast_hash": "9d9355b49fb94948d8e391c592d1c968",
+    "semantic_hash": "9d9355b49fb94948d8e391c592d1c968"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\nurturing\\direct_feeds.py": {
+    "mtime": 1781651509.993919,
+    "ast_hash": "5cdd5dad03e6405d1344f367b6cfc0d3",
+    "semantic_hash": "5cdd5dad03e6405d1344f367b6cfc0d3"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\nurturing\\google_slides.py": {
+    "mtime": 1781651509.9949179,
+    "ast_hash": "42e6f23b757a64caf15e1599ea84627e",
+    "semantic_hash": "42e6f23b757a64caf15e1599ea84627e"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\nurturing\\google_slides_template.py": {
+    "mtime": 1781651509.9949179,
+    "ast_hash": "47f7525662f9132f463a6d972dc1cfb3",
+    "semantic_hash": "47f7525662f9132f463a6d972dc1cfb3"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\nurturing\\newsletter_html_publisher.py": {
+    "mtime": 1781651509.9959145,
+    "ast_hash": "c3ab92a85ad12716fa0bb97931e407ba",
+    "semantic_hash": "c3ab92a85ad12716fa0bb97931e407ba"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\nurturing\\newsletter_pptx_publisher.py": {
+    "mtime": 1781651509.9959145,
+    "ast_hash": "d8e1d0fb4b22c8c8ca804c37f1f12ab7",
+    "semantic_hash": "d8e1d0fb4b22c8c8ca804c37f1f12ab7"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\nurturing\\newsletter_pptx_template.py": {
+    "mtime": 1781651509.996914,
+    "ast_hash": "aa32ec547e82b3f698b3b0ae3f7ff636",
+    "semantic_hash": "aa32ec547e82b3f698b3b0ae3f7ff636"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\nurturing\\nodes\\__init__.py": {
+    "mtime": 1781651509.996914,
+    "ast_hash": "b8413b8ae138448c8b2c642e39830664",
+    "semantic_hash": "b8413b8ae138448c8b2c642e39830664"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\nurturing\\nodes\\chart_planner.py": {
+    "mtime": 1781651509.9979146,
+    "ast_hash": "60d5c5eaa20a7ea4349caef7062bb2d5",
+    "semantic_hash": "60d5c5eaa20a7ea4349caef7062bb2d5"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\nurturing\\nodes\\chart_renderer.py": {
+    "mtime": 1781651509.9979146,
+    "ast_hash": "d9192bea3a8df3fd1c9e7973cec5ebbb",
+    "semantic_hash": "d9192bea3a8df3fd1c9e7973cec5ebbb"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\nurturing\\nodes\\content_scorer.py": {
+    "mtime": 1781651509.9989164,
+    "ast_hash": "d11f142f8442f8002af7dbf404db1a24",
+    "semantic_hash": "d11f142f8442f8002af7dbf404db1a24"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\nurturing\\nodes\\distributor.py": {
+    "mtime": 1781651509.9989164,
+    "ast_hash": "f2e7f3689be91bc30cf253fed2a5f3b9",
+    "semantic_hash": "f2e7f3689be91bc30cf253fed2a5f3b9"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\nurturing\\nodes\\evaluator_pre_media.py": {
+    "mtime": 1781651509.9989164,
+    "ast_hash": "69358e8b95e1b0fcd81692353806e9e8",
+    "semantic_hash": "69358e8b95e1b0fcd81692353806e9e8"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\nurturing\\nodes\\image_generator.py": {
+    "mtime": 1781651509.9999187,
+    "ast_hash": "194eea8714cdbc6088b6cde810901f54",
+    "semantic_hash": "194eea8714cdbc6088b6cde810901f54"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\nurturing\\nodes\\quality_review.py": {
+    "mtime": 1781651509.9999187,
+    "ast_hash": "3f97c710dd70aa4531f360c7f939951e",
+    "semantic_hash": "3f97c710dd70aa4531f360c7f939951e"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\nurturing\\nodes\\researcher.py": {
+    "mtime": 1781651510.0009184,
+    "ast_hash": "224db646e6254f9e1dc97204ff9f9cf8",
+    "semantic_hash": "224db646e6254f9e1dc97204ff9f9cf8"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\nurturing\\nodes\\slides_assembler.py": {
+    "mtime": 1781651510.0009184,
+    "ast_hash": "913834dc335232847ebfac09aade9522",
+    "semantic_hash": "913834dc335232847ebfac09aade9522"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\nurturing\\nodes\\slides_planner.py": {
+    "mtime": 1781651510.0009184,
+    "ast_hash": "049a8ffafac525f50022cc2289284390",
+    "semantic_hash": "049a8ffafac525f50022cc2289284390"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\nurturing\\nodes\\writer.py": {
+    "mtime": 1781651510.001918,
+    "ast_hash": "da08c684fc443dd83e0c4292306f17b0",
+    "semantic_hash": "da08c684fc443dd83e0c4292306f17b0"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\nurturing\\prompts.py": {
+    "mtime": 1781651510.001918,
+    "ast_hash": "fe4c144637eddc5445c5b1b5644fdb82",
+    "semantic_hash": "fe4c144637eddc5445c5b1b5644fdb82"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\nurturing\\reply_service.py": {
+    "mtime": 1781651510.0029187,
+    "ast_hash": "e93805cd7051c3041abe3c5368dbe686",
+    "semantic_hash": "e93805cd7051c3041abe3c5368dbe686"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\nurturing\\revise_service.py": {
+    "mtime": 1781651510.0029187,
+    "ast_hash": "8a5aecc1112e270db0d18dd63ed51180",
+    "semantic_hash": "8a5aecc1112e270db0d18dd63ed51180"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\nurturing\\tools.py": {
+    "mtime": 1781651510.003918,
+    "ast_hash": "4462cc13c284526f6d2c6bd0e2b08e24",
+    "semantic_hash": "4462cc13c284526f6d2c6bd0e2b08e24"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\nurturing\\workflow_v2.py": {
+    "mtime": 1781651510.004919,
+    "ast_hash": "5eaf1fda4459c628b6213fe495ea8e13",
+    "semantic_hash": "5eaf1fda4459c628b6213fe495ea8e13"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\scheduler\\__init__.py": {
+    "mtime": 1781651510.004919,
+    "ast_hash": "f23187f02572237fe19e458b3c437309",
+    "semantic_hash": "f23187f02572237fe19e458b3c437309"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\scheduler\\cron.py": {
+    "mtime": 1781651510.005915,
+    "ast_hash": "668156ff8f5b7ca0d9bb1a89b978c75e",
+    "semantic_hash": "668156ff8f5b7ca0d9bb1a89b978c75e"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\services\\__init__.py": {
+    "mtime": 1781651510.005915,
+    "ast_hash": "0eb69d1a2e61ad5b567ec4dec08e81d8",
+    "semantic_hash": "0eb69d1a2e61ad5b567ec4dec08e81d8"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\services\\nurturing_content_renderer.py": {
+    "mtime": 1781651510.0069172,
+    "ast_hash": "e0be1ef6e4a6196c87e99c7bf76c3da5",
+    "semantic_hash": "e0be1ef6e4a6196c87e99c7bf76c3da5"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\services\\nurturing_mail_service.py": {
+    "mtime": 1781651510.0069172,
+    "ast_hash": "7884d084a3f1e92b07637ee2e7dd3fe3",
+    "semantic_hash": "7884d084a3f1e92b07637ee2e7dd3fe3"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\services\\nurturing_schedule.py": {
+    "mtime": 1781651510.007919,
+    "ast_hash": "252bbe566c20ef39f5f01f29c9db2adc",
+    "semantic_hash": "252bbe566c20ef39f5f01f29c9db2adc"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\services\\nurturing_workflow_support.py": {
+    "mtime": 1781651510.0089183,
+    "ast_hash": "829b72ebb141b935f901c5837b8767e8",
+    "semantic_hash": "829b72ebb141b935f901c5837b8767e8"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\services\\pipedrive_service.py": {
+    "mtime": 1781651510.0089183,
+    "ast_hash": "70a21288addf116373ae9281e14722e7",
+    "semantic_hash": "70a21288addf116373ae9281e14722e7"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\shared\\__init__.py": {
+    "mtime": 1781651510.0089183,
+    "ast_hash": "5cc0b1d3c23ab4a6fd6647765f801ecb",
+    "semantic_hash": "5cc0b1d3c23ab4a6fd6647765f801ecb"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\shared\\chart_renderer.py": {
+    "mtime": 1781651510.0099194,
+    "ast_hash": "1797f8fa4e807855a14da54c3aacc7fd",
+    "semantic_hash": "1797f8fa4e807855a14da54c3aacc7fd"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\shared\\evaluator.py": {
+    "mtime": 1781651510.0099194,
+    "ast_hash": "ebaccfc16b74f68a4d8b39ad1c9d7db5",
+    "semantic_hash": "ebaccfc16b74f68a4d8b39ad1c9d7db5"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\tools\\__init__.py": {
+    "mtime": 1781651510.010918,
+    "ast_hash": "a571df17c8a2ef0b3f82040f400f3d28",
+    "semantic_hash": "a571df17c8a2ef0b3f82040f400f3d28"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\tools\\blob_media.py": {
+    "mtime": 1781651510.010918,
+    "ast_hash": "657404e9d06a39720f97c7cfa94fbbf4",
+    "semantic_hash": "657404e9d06a39720f97c7cfa94fbbf4"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\tools\\dotnet_client.py": {
+    "mtime": 1781651510.010918,
+    "ast_hash": "d939176a429d8a9c05b2eae098b0094d",
+    "semantic_hash": "d939176a429d8a9c05b2eae098b0094d"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\tools\\image_gen.py": {
+    "mtime": 1781651510.0119188,
+    "ast_hash": "a9ddaba17dbe9eb14d04f718338880f2",
+    "semantic_hash": "a9ddaba17dbe9eb14d04f718338880f2"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\tools\\llm.py": {
+    "mtime": 1781651510.0119188,
+    "ast_hash": "e02973685f174da9b6d891531425f4c7",
+    "semantic_hash": "e02973685f174da9b6d891531425f4c7"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\tools\\meta_api.py": {
+    "mtime": 1781651510.0119188,
+    "ast_hash": "b61a1d61ad036170c1bf3196870fd047",
+    "semantic_hash": "b61a1d61ad036170c1bf3196870fd047"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\tools\\pptx_layout.py": {
+    "mtime": 1781651510.0129144,
+    "ast_hash": "09a6c778d21703d22fb70f0f09a9cd77",
+    "semantic_hash": "09a6c778d21703d22fb70f0f09a9cd77"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\tools\\safe_json.py": {
+    "mtime": 1781651510.0129144,
+    "ast_hash": "150a20f7f17a8e372173473b31061815",
+    "semantic_hash": "150a20f7f17a8e372173473b31061815"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\tools\\tiktok_api.py": {
+    "mtime": 1781651510.0129144,
+    "ast_hash": "f67b1092ed6bdfbfb398f5836c218eab",
+    "semantic_hash": "f67b1092ed6bdfbfb398f5836c218eab"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\tools\\training_media.py": {
+    "mtime": 1781651510.0139184,
+    "ast_hash": "7447402839393494e1a83dd5711ac74b",
+    "semantic_hash": "7447402839393494e1a83dd5711ac74b"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\tools\\video_gen.py": {
+    "mtime": 1781651510.0139184,
+    "ast_hash": "911d0e23081b0c363e6368edfd11e874",
+    "semantic_hash": "911d0e23081b0c363e6368edfd11e874"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\tests\\__init__.py": {
+    "mtime": 1781651510.0149188,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\tests\\test_smoke_rework.py": {
+    "mtime": 1781651510.0159183,
+    "ast_hash": "acb38f2b5d5bda0d4d9878a5d3ea525b",
+    "semantic_hash": "acb38f2b5d5bda0d4d9878a5d3ea525b"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\tests\\test_workflow.py": {
+    "mtime": 1781651510.0159183,
+    "ast_hash": "ea9596c39f055e90f448999208490b64",
+    "semantic_hash": "ea9596c39f055e90f448999208490b64"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api.Tests\\ApiIntegrationTests.cs": {
+    "mtime": 1781651510.016919,
+    "ast_hash": "a86587a148d1f5d406adf2c075c72b81",
+    "semantic_hash": "a86587a148d1f5d406adf2c075c72b81"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api.Tests\\CommunityApprovalBackgroundServiceTests.cs": {
+    "mtime": 1781651510.0179183,
+    "ast_hash": "82eaf5789f651f38b8a60ac3128d3071",
+    "semantic_hash": "82eaf5789f651f38b8a60ac3128d3071"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api.Tests\\CommunityControllerTests.cs": {
+    "mtime": 1781651510.0179183,
+    "ast_hash": "48057388a53a7dcbf95ea1601b78712d",
+    "semantic_hash": "48057388a53a7dcbf95ea1601b78712d"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api.Tests\\CommunityReviewControllerTests.cs": {
+    "mtime": 1781651510.0179183,
+    "ast_hash": "9c71265101c9644122d01cf0d7c78583",
+    "semantic_hash": "9c71265101c9644122d01cf0d7c78583"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api.Tests\\CommunityReviewServiceTests.cs": {
+    "mtime": 1781651510.018918,
+    "ast_hash": "fbe0249617b39850f8faf413e57147c1",
+    "semantic_hash": "fbe0249617b39850f8faf413e57147c1"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api.Tests\\Novit.Web.Api.Tests.csproj": {
+    "mtime": 1781651510.018918,
+    "ast_hash": "651204106da83a1177e17286e1dcfad0",
+    "semantic_hash": "651204106da83a1177e17286e1dcfad0"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api.Tests\\NurturingHoldResumeTests.cs": {
+    "mtime": 1781651510.018918,
+    "ast_hash": "7f831eca939178b491de68c452a9d9d4",
+    "semantic_hash": "7f831eca939178b491de68c452a9d9d4"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api.Tests\\NurturingScheduleTests.cs": {
+    "mtime": 1781651510.019919,
+    "ast_hash": "244dca2b183bad43eec92ccc8fe09337",
+    "semantic_hash": "244dca2b183bad43eec92ccc8fe09337"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api.Tests\\WebhooksControllerTests.cs": {
+    "mtime": 1781651510.019919,
+    "ast_hash": "30779d12076f854541445185f4ad41cc",
+    "semantic_hash": "30779d12076f854541445185f4ad41cc"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api.Tests\\obj\\Debug\\net10.0\\.NETCoreApp,Version=v10.0.AssemblyAttributes.cs": {
+    "mtime": 1781651556.134395,
+    "ast_hash": "8479efdf06e2d26e053d27ffa6964185",
+    "semantic_hash": "8479efdf06e2d26e053d27ffa6964185"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api.Tests\\obj\\Debug\\net10.0\\Novit.Web.Api.Tests.AssemblyInfo.cs": {
+    "mtime": 1781651556.2844396,
+    "ast_hash": "fb82e8df3750330efcd3ca5823bba4ce",
+    "semantic_hash": "fb82e8df3750330efcd3ca5823bba4ce"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api.Tests\\obj\\Debug\\net10.0\\Novit.Web.Api.Tests.GlobalUsings.g.cs": {
+    "mtime": 1781651555.8333397,
+    "ast_hash": "535736b170e2841ba51152623818eddd",
+    "semantic_hash": "535736b170e2841ba51152623818eddd"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api.Tests\\obj\\Novit.Web.Api.Tests.csproj.nuget.dgspec.json": {
+    "mtime": 1781651565.3271785,
+    "ast_hash": "877214997f1af9863fd06c7d0049a404",
+    "semantic_hash": "877214997f1af9863fd06c7d0049a404"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api.Tests\\obj\\project.assets.json": {
+    "mtime": 1781651565.2811818,
+    "ast_hash": "ea438449d89d32f967f9c8eaf1a2e752",
+    "semantic_hash": "ea438449d89d32f967f9c8eaf1a2e752"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Controllers\\ChatController.cs": {
+    "mtime": 1781651510.02092,
+    "ast_hash": "7628ac71c7e9c0a110cf5fb3f49b82e6",
+    "semantic_hash": "7628ac71c7e9c0a110cf5fb3f49b82e6"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Controllers\\CommunityController.cs": {
+    "mtime": 1781651510.0219193,
+    "ast_hash": "2bbec8ba3fbf30210d046641f6fe3875",
+    "semantic_hash": "2bbec8ba3fbf30210d046641f6fe3875"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Controllers\\CommunityReviewController.cs": {
+    "mtime": 1781651510.0219193,
+    "ast_hash": "27d571ec72388abf7e8a711d80c9b627",
+    "semantic_hash": "27d571ec72388abf7e8a711d80c9b627"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Controllers\\ContactController.cs": {
+    "mtime": 1781651510.0229158,
+    "ast_hash": "d4d8dd4f53fd668f39d889db8a5d78da",
+    "semantic_hash": "d4d8dd4f53fd668f39d889db8a5d78da"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Controllers\\HealthController.cs": {
+    "mtime": 1781651510.0229158,
+    "ast_hash": "7fd4e90edd0740f755906359888ff6f1",
+    "semantic_hash": "7fd4e90edd0740f755906359888ff6f1"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Controllers\\InternalController.cs": {
+    "mtime": 1781651510.0229158,
+    "ast_hash": "5025a6495b4d05584da80170ab5f6989",
+    "semantic_hash": "5025a6495b4d05584da80170ab5f6989"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Controllers\\NurturingController.cs": {
+    "mtime": 1781651510.0239148,
+    "ast_hash": "cd3ec7cb67d1f1113c67f729c3b61a1a",
+    "semantic_hash": "cd3ec7cb67d1f1113c67f729c3b61a1a"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Controllers\\VoiceController.cs": {
+    "mtime": 1781651510.0239148,
+    "ast_hash": "9cfd948d4d9954ef6c7a8657a824ef90",
+    "semantic_hash": "9cfd948d4d9954ef6c7a8657a824ef90"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Controllers\\WebhooksController.cs": {
+    "mtime": 1781651510.0249152,
+    "ast_hash": "8eab15aa360015e9d37d448fd4566735",
+    "semantic_hash": "8eab15aa360015e9d37d448fd4566735"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Data\\Entities\\CommunityPublicationEntity.cs": {
+    "mtime": 1781651510.0249152,
+    "ast_hash": "b055451ae4e41ef2a542c72af6054a53",
+    "semantic_hash": "b055451ae4e41ef2a542c72af6054a53"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Data\\Entities\\Entities.cs": {
+    "mtime": 1781651510.025915,
+    "ast_hash": "a69527ed3edae7e28300097d0722d309",
+    "semantic_hash": "a69527ed3edae7e28300097d0722d309"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Data\\Entities\\NurturingEmailEntity.cs": {
+    "mtime": 1781651510.025915,
+    "ast_hash": "304df15a5a533edabfff1a6d839a1cf5",
+    "semantic_hash": "304df15a5a533edabfff1a6d839a1cf5"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Data\\Migrations\\20260225210651_InitialCreate.Designer.cs": {
+    "mtime": 1781651510.025915,
+    "ast_hash": "a6f63140dcc65c0727c8d92b2223b016",
+    "semantic_hash": "a6f63140dcc65c0727c8d92b2223b016"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Data\\Migrations\\20260225210651_InitialCreate.cs": {
+    "mtime": 1781651510.0269165,
+    "ast_hash": "e0cef52ddb0ddfb8eeb195223952e519",
+    "semantic_hash": "e0cef52ddb0ddfb8eeb195223952e519"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Data\\Migrations\\20260304170938_AddNurturingEmails.Designer.cs": {
+    "mtime": 1781651510.0269165,
+    "ast_hash": "2aa08e35c129ed61e4426a866c924739",
+    "semantic_hash": "2aa08e35c129ed61e4426a866c924739"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Data\\Migrations\\20260304170938_AddNurturingEmails.cs": {
+    "mtime": 1781651510.0279157,
+    "ast_hash": "850c66083ddaeb76cb76aa2251bb8ae8",
+    "semantic_hash": "850c66083ddaeb76cb76aa2251bb8ae8"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Data\\Migrations\\20260304203631_AddNurturingEmailVersion.Designer.cs": {
+    "mtime": 1781651510.0279157,
+    "ast_hash": "1b6a4285ed549c78a0cfaa5c9bd4ed38",
+    "semantic_hash": "1b6a4285ed549c78a0cfaa5c9bd4ed38"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Data\\Migrations\\20260304203631_AddNurturingEmailVersion.cs": {
+    "mtime": 1781651510.0279157,
+    "ast_hash": "004bec05565f307bb6755525850d21f0",
+    "semantic_hash": "004bec05565f307bb6755525850d21f0"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Data\\Migrations\\20260312010000_AddNewsletterIsOnHold.Designer.cs": {
+    "mtime": 1781651510.028914,
+    "ast_hash": "61c60a779de5422b3fb479add714aa14",
+    "semantic_hash": "61c60a779de5422b3fb479add714aa14"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Data\\Migrations\\20260312010000_AddNewsletterIsOnHold.cs": {
+    "mtime": 1781651510.028914,
+    "ast_hash": "1bc507110b7901f3d121ef968569b6cb",
+    "semantic_hash": "1bc507110b7901f3d121ef968569b6cb"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Data\\Migrations\\20260421165000_WidenNurturingMonthKeyForBiweeklyCycles.cs": {
+    "mtime": 1781651510.028914,
+    "ast_hash": "788129dbbd1a8d32b580e1a9c0685419",
+    "semantic_hash": "788129dbbd1a8d32b580e1a9c0685419"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Data\\Migrations\\20260426143000_AddCommunityPublications.Designer.cs": {
+    "mtime": 1781651510.028914,
+    "ast_hash": "81532937c2462439faea9cb914ce3745",
+    "semantic_hash": "81532937c2462439faea9cb914ce3745"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Data\\Migrations\\20260426143000_AddCommunityPublications.cs": {
+    "mtime": 1781651510.029914,
+    "ast_hash": "506ac99784c38526de2ec438cc63323f",
+    "semantic_hash": "506ac99784c38526de2ec438cc63323f"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Data\\Migrations\\20260520144606_AddCommunityReviewStage.Designer.cs": {
+    "mtime": 1781651510.029914,
+    "ast_hash": "5ba3830047651ed938bd1edf9fc76507",
+    "semantic_hash": "5ba3830047651ed938bd1edf9fc76507"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Data\\Migrations\\20260520144606_AddCommunityReviewStage.cs": {
+    "mtime": 1781651510.030914,
+    "ast_hash": "1fbf96b197032eedca49f4c366383158",
+    "semantic_hash": "1fbf96b197032eedca49f4c366383158"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Data\\Migrations\\20260520193000_AddNurturingReportArtifacts.cs": {
+    "mtime": 1781651510.030914,
+    "ast_hash": "2965d4428e8c2827e76523c50d92f006",
+    "semantic_hash": "2965d4428e8c2827e76523c50d92f006"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Data\\Migrations\\NovitDbContextModelSnapshot.cs": {
+    "mtime": 1781651510.030914,
+    "ast_hash": "ebaccba6969e28ab624a2d498541edfa",
+    "semantic_hash": "ebaccba6969e28ab624a2d498541edfa"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Data\\NovitDbContext.cs": {
+    "mtime": 1781651510.0319195,
+    "ast_hash": "bffce266d6c52057c3ee679f851cbe43",
+    "semantic_hash": "bffce266d6c52057c3ee679f851cbe43"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Filters\\RequireApiKeyAttribute.cs": {
+    "mtime": 1781651510.0319195,
+    "ast_hash": "625a81f5e10013962db719eb90f54a77",
+    "semantic_hash": "625a81f5e10013962db719eb90f54a77"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Filters\\RequireInternalKeyAttribute.cs": {
+    "mtime": 1781651510.0329187,
+    "ast_hash": "a1ffe3e9aea400724b96a8589bc66c7c",
+    "semantic_hash": "a1ffe3e9aea400724b96a8589bc66c7c"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Hubs\\ChatHub.cs": {
+    "mtime": 1781651510.0329187,
+    "ast_hash": "ef022ce45eefaa43905e5df48d6c0967",
+    "semantic_hash": "ef022ce45eefaa43905e5df48d6c0967"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Models\\AzureAIOptions.cs": {
+    "mtime": 1781651510.0339148,
+    "ast_hash": "3aabeb5c50f89d4e844a53dbb439b5f8",
+    "semantic_hash": "3aabeb5c50f89d4e844a53dbb439b5f8"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Models\\CalComModels.cs": {
+    "mtime": 1781651510.0349152,
+    "ast_hash": "17deee860c01700a98c98c5dc925cec1",
+    "semantic_hash": "17deee860c01700a98c98c5dc925cec1"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Models\\CalComOptions.cs": {
+    "mtime": 1781651510.0349152,
+    "ast_hash": "04dd41edc0f19c39ebac80b597ad7a9c",
+    "semantic_hash": "04dd41edc0f19c39ebac80b597ad7a9c"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Models\\ChatLimits.cs": {
+    "mtime": 1781651510.0349152,
+    "ast_hash": "f5aecf29b39d46b39934be6f98b50552",
+    "semantic_hash": "f5aecf29b39d46b39934be6f98b50552"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Models\\ChatModels.cs": {
+    "mtime": 1781651510.0359178,
+    "ast_hash": "c74cf486494d949c8d82ed4278d9aaa3",
+    "semantic_hash": "c74cf486494d949c8d82ed4278d9aaa3"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Models\\CommunityDraftModels.cs": {
+    "mtime": 1781651510.0359178,
+    "ast_hash": "4fc9156acac6aaac9568b9e158455061",
+    "semantic_hash": "4fc9156acac6aaac9568b9e158455061"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Models\\CommunityPublicationStatus.cs": {
+    "mtime": 1781651510.0359178,
+    "ast_hash": "2dea9c95658e497bc15d41a614154b07",
+    "semantic_hash": "2dea9c95658e497bc15d41a614154b07"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Models\\GoogleOptions.cs": {
+    "mtime": 1781651510.0359178,
+    "ast_hash": "717f4a289a9e1e3cc1f3c58b142231e1",
+    "semantic_hash": "717f4a289a9e1e3cc1f3c58b142231e1"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Models\\NurturingOptions.cs": {
+    "mtime": 1781651510.0369184,
+    "ast_hash": "e5a50e5f96e6a6c4db2018cf300f1d7b",
+    "semantic_hash": "e5a50e5f96e6a6c4db2018cf300f1d7b"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Models\\PipedriveOptions.cs": {
+    "mtime": 1781651510.0369184,
+    "ast_hash": "6c84bbafac75dd4c6a47ccce37e90f63",
+    "semantic_hash": "6c84bbafac75dd4c6a47ccce37e90f63"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Novit.Web.Api.csproj": {
+    "mtime": 1781651510.0369184,
+    "ast_hash": "a4d0ac1f2986d645fbc86e01206ba8c4",
+    "semantic_hash": "a4d0ac1f2986d645fbc86e01206ba8c4"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Program.cs": {
+    "mtime": 1781651510.037918,
+    "ast_hash": "84056421efa0b9ce658bf79a06fbab32",
+    "semantic_hash": "84056421efa0b9ce658bf79a06fbab32"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Properties\\launchSettings.json": {
+    "mtime": 1781651510.0399177,
+    "ast_hash": "873db935d471051e3d6344b2411cf95c",
+    "semantic_hash": "873db935d471051e3d6344b2411cf95c"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Services\\AgentClient.cs": {
+    "mtime": 1781651510.0399177,
+    "ast_hash": "49425aa376df9e7fd98a3270cbca4963",
+    "semantic_hash": "49425aa376df9e7fd98a3270cbca4963"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Services\\AzureAIChatService.cs": {
+    "mtime": 1781651510.040918,
+    "ast_hash": "c0fda88bbfcd77c2bdce9886fac9a245",
+    "semantic_hash": "c0fda88bbfcd77c2bdce9886fac9a245"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Services\\AzureSpeechService.cs": {
+    "mtime": 1781651510.040918,
+    "ast_hash": "ed2655967be060419473b3ab884011ce",
+    "semantic_hash": "ed2655967be060419473b3ab884011ce"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Services\\CalComService.cs": {
+    "mtime": 1781651510.0419166,
+    "ast_hash": "640c4852bd352edd5c7c43cfdcbf7c63",
+    "semantic_hash": "640c4852bd352edd5c7c43cfdcbf7c63"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Services\\ChatToolDefinitions.cs": {
+    "mtime": 1781651510.0419166,
+    "ast_hash": "1b4e230a74ce7b459e767306d9266ddc",
+    "semantic_hash": "1b4e230a74ce7b459e767306d9266ddc"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Services\\ChatToolHandler.cs": {
+    "mtime": 1781651510.0429182,
+    "ast_hash": "b71a059d3dca57c489fecc618e34b952",
+    "semantic_hash": "b71a059d3dca57c489fecc618e34b952"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Services\\CommunityApprovalBackgroundService.cs": {
+    "mtime": 1781651510.0429182,
+    "ast_hash": "d45ea7d411d8308d95265793065af23a",
+    "semantic_hash": "d45ea7d411d8308d95265793065af23a"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Services\\CommunityPublicationPublisher.cs": {
+    "mtime": 1781651510.0429182,
+    "ast_hash": "7e5e14b2d16230b783ced1a5b744ffca",
+    "semantic_hash": "7e5e14b2d16230b783ced1a5b744ffca"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Services\\CommunityReviewService.cs": {
+    "mtime": 1781651510.043919,
+    "ast_hash": "eae70b255465deee7a7517f787b5c803",
+    "semantic_hash": "eae70b255465deee7a7517f787b5c803"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Services\\ICalComService.cs": {
+    "mtime": 1781651510.043919,
+    "ast_hash": "768c71d4cf9dc1d6d168f447df0ff976",
+    "semantic_hash": "768c71d4cf9dc1d6d168f447df0ff976"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Services\\IChatAIService.cs": {
+    "mtime": 1781651510.043919,
+    "ast_hash": "126acc97c099caf4e7a661b811f673a1",
+    "semantic_hash": "126acc97c099caf4e7a661b811f673a1"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Services\\IConversationStore.cs": {
+    "mtime": 1781651510.043919,
+    "ast_hash": "6e7fb2c2c6f48fe17dc2cb85d2cb5dd9",
+    "semantic_hash": "6e7fb2c2c6f48fe17dc2cb85d2cb5dd9"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Services\\INurturingMailService.cs": {
+    "mtime": 1781651510.044918,
+    "ast_hash": "2019fabfffcebb6fee9e6119e8e25ecd",
+    "semantic_hash": "2019fabfffcebb6fee9e6119e8e25ecd"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Services\\IPipedriveService.cs": {
+    "mtime": 1781651510.044918,
+    "ast_hash": "02de598789cc247322fc8447b6cf051f",
+    "semantic_hash": "02de598789cc247322fc8447b6cf051f"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Services\\ISpeechService.cs": {
+    "mtime": 1781651510.044918,
+    "ast_hash": "dd184ac7af2824d952c00cc33d44147d",
+    "semantic_hash": "dd184ac7af2824d952c00cc33d44147d"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Services\\InMemoryConversationStore.cs": {
+    "mtime": 1781651510.0459182,
+    "ast_hash": "4f8482825bfd74727a4d315844bbe808",
+    "semantic_hash": "4f8482825bfd74727a4d315844bbe808"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Services\\NurturingContentRenderer.cs": {
+    "mtime": 1781651510.0459182,
+    "ast_hash": "f6e6581000cbed85a9bb7183849b7529",
+    "semantic_hash": "f6e6581000cbed85a9bb7183849b7529"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Services\\NurturingMailService.cs": {
+    "mtime": 1781651510.0459182,
+    "ast_hash": "75e6b0967cdea5fe424d029cc9ab5c09",
+    "semantic_hash": "75e6b0967cdea5fe424d029cc9ab5c09"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Services\\NurturingSchedule.cs": {
+    "mtime": 1781651510.0469182,
+    "ast_hash": "9866f9d1eee9e2a7b1574546eae69c1a",
+    "semantic_hash": "9866f9d1eee9e2a7b1574546eae69c1a"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Services\\NurturingWorkflowSupport.cs": {
+    "mtime": 1781651510.0469182,
+    "ast_hash": "bb2c24453e728161d14336768ed5f1db",
+    "semantic_hash": "bb2c24453e728161d14336768ed5f1db"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Services\\PipedriveService.cs": {
+    "mtime": 1781651510.0469182,
+    "ast_hash": "c5a0e170ec3e0fb1f8a9911b284e7863",
+    "semantic_hash": "c5a0e170ec3e0fb1f8a9911b284e7863"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Services\\PostgresConversationStore.cs": {
+    "mtime": 1781651510.047918,
+    "ast_hash": "22a36e731265e3b36a0b255a22abd5d3",
+    "semantic_hash": "22a36e731265e3b36a0b255a22abd5d3"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\appsettings.Development.json": {
+    "mtime": 1781651510.047918,
+    "ast_hash": "804b473502a4c415cf75db61c56c32aa",
+    "semantic_hash": "804b473502a4c415cf75db61c56c32aa"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\appsettings.json": {
+    "mtime": 1781651510.047918,
+    "ast_hash": "f7e65dde4e5533740a0d57ac9355c0e8",
+    "semantic_hash": "f7e65dde4e5533740a0d57ac9355c0e8"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\obj\\Debug\\net10.0\\.NETCoreApp,Version=v10.0.AssemblyAttributes.cs": {
+    "mtime": 1781651565.954869,
+    "ast_hash": "8479efdf06e2d26e053d27ffa6964185",
+    "semantic_hash": "8479efdf06e2d26e053d27ffa6964185"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\obj\\Debug\\net10.0\\Novit.Web.Api.AssemblyInfo.cs": {
+    "mtime": 1781651565.9708705,
+    "ast_hash": "2ee91a956bcdeaa444f9f21a36c686c7",
+    "semantic_hash": "2ee91a956bcdeaa444f9f21a36c686c7"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\obj\\Debug\\net10.0\\Novit.Web.Api.GlobalUsings.g.cs": {
+    "mtime": 1781651565.5958674,
+    "ast_hash": "5b3fdaae7b59d230d7d136eab049a98a",
+    "semantic_hash": "5b3fdaae7b59d230d7d136eab049a98a"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\obj\\Novit.Web.Api.csproj.nuget.dgspec.json": {
+    "mtime": 1781651565.3261783,
+    "ast_hash": "f380d905d651d4f86bac0f025f6c0d60",
+    "semantic_hash": "f380d905d651d4f86bac0f025f6c0d60"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\obj\\project.assets.json": {
+    "mtime": 1781651565.2811818,
+    "ast_hash": "8f2393212eacd57bf9154442f14a55a3",
+    "semantic_hash": "8f2393212eacd57bf9154442f14a55a3"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\wwwroot\\app.js": {
+    "mtime": 1781651510.0489185,
+    "ast_hash": "1fa3867d50e73163eef991cb17d792de",
+    "semantic_hash": "1fa3867d50e73163eef991cb17d792de"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\frontend\\.vscode\\extensions.json": {
+    "mtime": 1781651510.050918,
+    "ast_hash": "66fd9e60d4633b6099fe02e06a7075ea",
+    "semantic_hash": "66fd9e60d4633b6099fe02e06a7075ea"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\frontend\\.vscode\\launch.json": {
+    "mtime": 1781651510.050918,
+    "ast_hash": "430386a2f03e9d559664c196344c121b",
+    "semantic_hash": "430386a2f03e9d559664c196344c121b"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\frontend\\.vscode\\tasks.json": {
+    "mtime": 1781651510.050918,
+    "ast_hash": "d2fc2624d783980be281b4cf0acc2455",
+    "semantic_hash": "d2fc2624d783980be281b4cf0acc2455"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\frontend\\angular.json": {
+    "mtime": 1781651510.051917,
+    "ast_hash": "54076762d0145d9bfa661fe2260e715d",
+    "semantic_hash": "54076762d0145d9bfa661fe2260e715d"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\frontend\\package.json": {
+    "mtime": 1781651510.0549152,
+    "ast_hash": "710604b0784866f071e10c611a277251",
+    "semantic_hash": "710604b0784866f071e10c611a277251"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\frontend\\src\\app\\app.component.spec.ts": {
+    "mtime": 1781651510.0809178,
+    "ast_hash": "6263a4e9d25bf8a8a7167be9d2204e4f",
+    "semantic_hash": "6263a4e9d25bf8a8a7167be9d2204e4f"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\frontend\\src\\app\\app.component.ts": {
+    "mtime": 1781651510.0819178,
+    "ast_hash": "e52402a232419137aadd4c40c1dd9bc9",
+    "semantic_hash": "e52402a232419137aadd4c40c1dd9bc9"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\frontend\\src\\app\\app.config.server.ts": {
+    "mtime": 1781651510.0819178,
+    "ast_hash": "af30990bebfe639bbde515fbdd43e30f",
+    "semantic_hash": "af30990bebfe639bbde515fbdd43e30f"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\frontend\\src\\app\\app.config.ts": {
+    "mtime": 1781651510.0819178,
+    "ast_hash": "4bf7f07ce6fb6fd9835958f8f572f054",
+    "semantic_hash": "4bf7f07ce6fb6fd9835958f8f572f054"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\frontend\\src\\app\\app.routes.ts": {
+    "mtime": 1781651510.082918,
+    "ast_hash": "41e4bac7a1d7cd48f4d03907407942d3",
+    "semantic_hash": "41e4bac7a1d7cd48f4d03907407942d3"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\frontend\\src\\main.server.ts": {
+    "mtime": 1781651510.082918,
+    "ast_hash": "73518ba5ff2566ec5be2eafe7c4c0ec2",
+    "semantic_hash": "73518ba5ff2566ec5be2eafe7c4c0ec2"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\frontend\\src\\main.ts": {
+    "mtime": 1781651510.082918,
+    "ast_hash": "b5c1d106e573fea21ef1ad9e4360e77a",
+    "semantic_hash": "b5c1d106e573fea21ef1ad9e4360e77a"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\frontend\\src\\page-flip.d.ts": {
+    "mtime": 1781651510.083918,
+    "ast_hash": "9342f160eb0be677911788e4f4a1f6e7",
+    "semantic_hash": "9342f160eb0be677911788e4f4a1f6e7"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\frontend\\src\\server.ts": {
+    "mtime": 1781651510.083918,
+    "ast_hash": "83169c67c18e09328c234bcf8349374b",
+    "semantic_hash": "83169c67c18e09328c234bcf8349374b"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\frontend\\tsconfig.app.json": {
+    "mtime": 1781651510.084918,
+    "ast_hash": "8730c9d418a705428f26475a6f37037c",
+    "semantic_hash": "8730c9d418a705428f26475a6f37037c"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\frontend\\tsconfig.json": {
+    "mtime": 1781651510.084918,
+    "ast_hash": "dd3c8905847764e8a227c8bbb23ffab6",
+    "semantic_hash": "dd3c8905847764e8a227c8bbb23ffab6"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\frontend\\tsconfig.spec.json": {
+    "mtime": 1781651510.084918,
+    "ast_hash": "fde196cef563197a78958ceaea284638",
+    "semantic_hash": "fde196cef563197a78958ceaea284638"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\web-novit-ai.sln": {
+    "mtime": 1781651510.084918,
+    "ast_hash": "e6970532ef3b638eff9dc4b6aa934b7e",
+    "semantic_hash": "e6970532ef3b638eff9dc4b6aa934b7e"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\.opencode\\commands\\opsx-apply.md": {
+    "mtime": 1781658371.052024,
+    "ast_hash": "98dfe12d359f39ac0d631c06c7f4d134",
+    "semantic_hash": "98dfe12d359f39ac0d631c06c7f4d134"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\.opencode\\commands\\opsx-archive.md": {
+    "mtime": 1781658371.052024,
+    "ast_hash": "48a27c2c74ccc0c38f73f5fe1731403b",
+    "semantic_hash": "48a27c2c74ccc0c38f73f5fe1731403b"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\.opencode\\commands\\opsx-bulk-archive.md": {
+    "mtime": 1781658371.053023,
+    "ast_hash": "94172a51465377f5c9192858ea5b61e5",
+    "semantic_hash": "94172a51465377f5c9192858ea5b61e5"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\.opencode\\commands\\opsx-explore.md": {
+    "mtime": 1781658371.0510242,
+    "ast_hash": "74d5125862b00db97818eb3cbbee8167",
+    "semantic_hash": "74d5125862b00db97818eb3cbbee8167"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\.opencode\\commands\\opsx-propose.md": {
+    "mtime": 1781658371.053023,
+    "ast_hash": "a0c6cfc575d565b5343b1d829a198909",
+    "semantic_hash": "a0c6cfc575d565b5343b1d829a198909"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\.opencode\\skills\\graphify\\SKILL.md": {
+    "mtime": 1781658315.9299278,
+    "ast_hash": "edf0f19d2d512df1463ac70aaa5e02a6",
+    "semantic_hash": "edf0f19d2d512df1463ac70aaa5e02a6"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\.opencode\\skills\\graphify\\references\\add-watch.md": {
+    "mtime": 1781657943.0940888,
+    "ast_hash": "0df0589623217ca38a12bdcabfb42f4c",
+    "semantic_hash": "0df0589623217ca38a12bdcabfb42f4c"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\.opencode\\skills\\graphify\\references\\exports.md": {
+    "mtime": 1781657943.0940888,
+    "ast_hash": "c04ddf8f1f5ef5e262ebec491a523c74",
+    "semantic_hash": "c04ddf8f1f5ef5e262ebec491a523c74"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\.opencode\\skills\\graphify\\references\\extraction-spec.md": {
+    "mtime": 1781657943.0940888,
+    "ast_hash": "24808b03abfeaf5f6435bb69c0125b2c",
+    "semantic_hash": "24808b03abfeaf5f6435bb69c0125b2c"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\.opencode\\skills\\graphify\\references\\github-and-merge.md": {
+    "mtime": 1781657943.0950904,
+    "ast_hash": "cde13df085e4c492aeb7ba298a996d0d",
+    "semantic_hash": "cde13df085e4c492aeb7ba298a996d0d"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\.opencode\\skills\\graphify\\references\\hooks.md": {
+    "mtime": 1781657943.0950904,
+    "ast_hash": "3f545db6ce646650bb9de588f5512a27",
+    "semantic_hash": "3f545db6ce646650bb9de588f5512a27"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\.opencode\\skills\\graphify\\references\\query.md": {
+    "mtime": 1781657943.0950904,
+    "ast_hash": "c2a8e798674a81b02aa9975f43023819",
+    "semantic_hash": "c2a8e798674a81b02aa9975f43023819"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\.opencode\\skills\\graphify\\references\\transcribe.md": {
+    "mtime": 1781657943.0960894,
+    "ast_hash": "70f6aa30d6211f3a2c7e9fc45479f50c",
+    "semantic_hash": "70f6aa30d6211f3a2c7e9fc45479f50c"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\.opencode\\skills\\graphify\\references\\update.md": {
+    "mtime": 1781657943.0960894,
+    "ast_hash": "0dad167a95bdb389f02fecffb60b1bc8",
+    "semantic_hash": "0dad167a95bdb389f02fecffb60b1bc8"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\.opencode\\skills\\openspec-apply-change\\SKILL.md": {
+    "mtime": 1781658371.049026,
+    "ast_hash": "78fc4f21278a5f6609f5fa00b2b22306",
+    "semantic_hash": "78fc4f21278a5f6609f5fa00b2b22306"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\.opencode\\skills\\openspec-archive-change\\SKILL.md": {
+    "mtime": 1781658371.049026,
+    "ast_hash": "f010cb3292d101742592bcad1abfe762",
+    "semantic_hash": "f010cb3292d101742592bcad1abfe762"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\.opencode\\skills\\openspec-bulk-archive-change\\SKILL.md": {
+    "mtime": 1781658371.0500252,
+    "ast_hash": "7289c3287328e38b7925dcd8eb0464d6",
+    "semantic_hash": "7289c3287328e38b7925dcd8eb0464d6"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\.opencode\\skills\\openspec-explore\\SKILL.md": {
+    "mtime": 1781658371.0480232,
+    "ast_hash": "01227b0646944af4c0a5fd1b31ec6ce1",
+    "semantic_hash": "01227b0646944af4c0a5fd1b31ec6ce1"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\.opencode\\skills\\openspec-propose\\SKILL.md": {
+    "mtime": 1781658371.0510242,
+    "ast_hash": "cafdd99d14adcd7f90c0cd6a50ed5f9a",
+    "semantic_hash": "cafdd99d14adcd7f90c0cd6a50ed5f9a"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\AGENTS.md": {
+    "mtime": 1781658315.9319265,
+    "ast_hash": "752aa83aa64361ac32860f882dcff932",
+    "semantic_hash": "752aa83aa64361ac32860f882dcff932"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\README.md": {
+    "mtime": 1781658157.193819,
+    "ast_hash": "000eddf915a815f462a7304d7612bdb4",
+    "semantic_hash": "000eddf915a815f462a7304d7612bdb4"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\openspec\\config.yaml": {
+    "mtime": 1781658371.0540245,
+    "ast_hash": "9e3e7672b387a282583011181ab35f9a",
+    "semantic_hash": "9e3e7672b387a282583011181ab35f9a"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\.github\\agents\\agente-lead-novit.agent.md": {
+    "mtime": 1781651509.9149158,
+    "ast_hash": "42e64f19c9f7998b7cd675cde883e5f2",
+    "semantic_hash": "42e64f19c9f7998b7cd675cde883e5f2"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\.github\\workflows\\deploy.yml": {
+    "mtime": 1781651509.9149158,
+    "ast_hash": "72630b40836aca6d4296a07eb7e252b0",
+    "semantic_hash": "72630b40836aca6d4296a07eb7e252b0"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\CLAUDE.md": {
+    "mtime": 1781651509.9159155,
+    "ast_hash": "657e990af98c8afdfd6304f82cd88c08",
+    "semantic_hash": "657e990af98c8afdfd6304f82cd88c08"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\ENV_VARS_AGENT.md": {
+    "mtime": 1781651509.9159155,
+    "ast_hash": "364462a27fa9b35846ba1bf89f458a7c",
+    "semantic_hash": "364462a27fa9b35846ba1bf89f458a7c"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\docker-compose.yml": {
+    "mtime": 1781651509.916916,
+    "ast_hash": "68412fb9165223dd91fbc17c3a7b13d7",
+    "semantic_hash": "68412fb9165223dd91fbc17c3a7b13d7"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\docs\\GEMINI_SLIDES_PROMPTS.md": {
+    "mtime": 1781651509.917916,
+    "ast_hash": "46baf6738cd7fcf3891ec7854c793a57",
+    "semantic_hash": "46baf6738cd7fcf3891ec7854c793a57"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\docs\\MIGRATION_PLAN.md": {
+    "mtime": 1781651509.917916,
+    "ast_hash": "0ba304c17f926702f621053ecb0fce3f",
+    "semantic_hash": "0ba304c17f926702f621053ecb0fce3f"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\docs\\openspec.md": {
+    "mtime": 1781651509.9189155,
+    "ast_hash": "b582e3c6126f8532b126b67a1eb925f4",
+    "semantic_hash": "b582e3c6126f8532b126b67a1eb925f4"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\media\\training\\logos\\README.md": {
+    "mtime": 1781651509.9809182,
+    "ast_hash": "23242e55bdb99ea11b39ed6420f10b50",
+    "semantic_hash": "23242e55bdb99ea11b39ed6420f10b50"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\media\\training\\published-post-references\\README.md": {
+    "mtime": 1781651509.9809182,
+    "ast_hash": "72aba7eefcd8eb89ad7888c550c6862a",
+    "semantic_hash": "72aba7eefcd8eb89ad7888c550c6862a"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\agent\\community_manager\\nurturing\\templates\\newsletter.html": {
+    "mtime": 1781651510.003918,
+    "ast_hash": "4d7b77f5dbaa35961d334644a255df27",
+    "semantic_hash": "4d7b77f5dbaa35961d334644a255df27"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Prompts\\system-prompt-en.md": {
+    "mtime": 1781651510.038918,
+    "ast_hash": "d063407782ce364a420b98723575df20",
+    "semantic_hash": "d063407782ce364a420b98723575df20"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\Prompts\\system-prompt-es.md": {
+    "mtime": 1781651510.038918,
+    "ast_hash": "44557ad42e772fb971c8b91e29ae716e",
+    "semantic_hash": "44557ad42e772fb971c8b91e29ae716e"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\backend\\Novit.Web.Api\\wwwroot\\index.html": {
+    "mtime": 1781651510.0489185,
+    "ast_hash": "908f6497416387e1d592e6674cbee981",
+    "semantic_hash": "908f6497416387e1d592e6674cbee981"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\frontend\\README.md": {
+    "mtime": 1781651510.051917,
+    "ast_hash": "10eff53ae1abb953493aeddfc54d93ef",
+    "semantic_hash": "10eff53ae1abb953493aeddfc54d93ef"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\frontend\\public\\assets\\images\\slides\\image-catalog.md": {
+    "mtime": 1781651510.0779173,
+    "ast_hash": "df478ccf2509c995abb4f6ebfdc38c4b",
+    "semantic_hash": "df478ccf2509c995abb4f6ebfdc38c4b"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\frontend\\public\\privacy-policy.html": {
+    "mtime": 1781651510.0799184,
+    "ast_hash": "445398b6a2937fa16646c5d6ae36f041",
+    "semantic_hash": "445398b6a2937fa16646c5d6ae36f041"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\frontend\\src\\app\\app.component.html": {
+    "mtime": 1781651510.0799184,
+    "ast_hash": "9ec20047a78218c6664f5c920d2fd5f0",
+    "semantic_hash": "9ec20047a78218c6664f5c920d2fd5f0"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\frontend\\src\\index.html": {
+    "mtime": 1781651510.082918,
+    "ast_hash": "d4d2f3dac589cd9717c844a91328acd7",
+    "semantic_hash": "d4d2f3dac589cd9717c844a91328acd7"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\media\\training\\20231221_195405.jpg": {
+    "mtime": 1781651509.9359162,
+    "ast_hash": "41faac34bf8e4ba0d0fdf337d674bc38",
+    "semantic_hash": "41faac34bf8e4ba0d0fdf337d674bc38"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\media\\training\\20231221_195408.jpg": {
+    "mtime": 1781651509.946919,
+    "ast_hash": "00ddf165f873c766bd5a83cfadc4e7b1",
+    "semantic_hash": "00ddf165f873c766bd5a83cfadc4e7b1"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\media\\training\\20231221_200857.jpg": {
+    "mtime": 1781651509.9579186,
+    "ast_hash": "c239557176bf3919f40b099cd4afcccf",
+    "semantic_hash": "c239557176bf3919f40b099cd4afcccf"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\media\\training\\Novit _1.jpg": {
+    "mtime": 1781651509.9619145,
+    "ast_hash": "d3841156ffe107639db20cca1915eb70",
+    "semantic_hash": "d3841156ffe107639db20cca1915eb70"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\media\\training\\Novit _10.jpg": {
+    "mtime": 1781651509.9659176,
+    "ast_hash": "302c737d7d30711b327a6e4eafd85c23",
+    "semantic_hash": "302c737d7d30711b327a6e4eafd85c23"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\media\\training\\Novit _2.jpg": {
+    "mtime": 1781651509.9689174,
+    "ast_hash": "22927a73f5d28560fcde34ee8efdaf57",
+    "semantic_hash": "22927a73f5d28560fcde34ee8efdaf57"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\media\\training\\Novit _3.jpg": {
+    "mtime": 1781651509.971915,
+    "ast_hash": "a211493cdaccc784d286ede33fad51b5",
+    "semantic_hash": "a211493cdaccc784d286ede33fad51b5"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\media\\training\\Novit _39.jpg": {
+    "mtime": 1781651509.974915,
+    "ast_hash": "0e843504c9971f8b10ceb89789641a20",
+    "semantic_hash": "0e843504c9971f8b10ceb89789641a20"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\media\\training\\Novit _9.jpg": {
+    "mtime": 1781651509.9789145,
+    "ast_hash": "3b80e9dfdeee19bed0afc56a80472553",
+    "semantic_hash": "3b80e9dfdeee19bed0afc56a80472553"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\media\\training\\ventana-3.jpg": {
+    "mtime": 1781651509.981918,
+    "ast_hash": "65b44a8fa12169edd69bc1e5fb201baf",
+    "semantic_hash": "65b44a8fa12169edd69bc1e5fb201baf"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\frontend\\public\\assets\\images\\favicon.png": {
+    "mtime": 1781651510.055919,
+    "ast_hash": "18bce350b835bd69f2b1923a5a55ca4c",
+    "semantic_hash": "18bce350b835bd69f2b1923a5a55ca4c"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\frontend\\public\\assets\\images\\ig-default-cover.jpg": {
+    "mtime": 1781651510.0569184,
+    "ast_hash": "0a893715c21c67bcc9a7badc5b1e7187",
+    "semantic_hash": "0a893715c21c67bcc9a7badc5b1e7187"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\frontend\\public\\assets\\images\\novit-isologo.png": {
+    "mtime": 1781651510.057918,
+    "ast_hash": "4f4136d2f41bc5114c1ba49010659ceb",
+    "semantic_hash": "4f4136d2f41bc5114c1ba49010659ceb"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\frontend\\public\\assets\\images\\novit-logo-dark.png": {
+    "mtime": 1781651510.057918,
+    "ast_hash": "50ed627efa879c80a5f563723c97b8a9",
+    "semantic_hash": "50ed627efa879c80a5f563723c97b8a9"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\frontend\\public\\assets\\images\\novit-logo.png": {
+    "mtime": 1781651510.058918,
+    "ast_hash": "2c2d7d077a4d8b7316f1b4085732eaa1",
+    "semantic_hash": "2c2d7d077a4d8b7316f1b4085732eaa1"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\frontend\\public\\assets\\images\\slides\\1-portada.png": {
+    "mtime": 1781651510.0599177,
+    "ast_hash": "cd63eb111ef9e8b756f987a7914d1993",
+    "semantic_hash": "cd63eb111ef9e8b756f987a7914d1993"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\frontend\\public\\assets\\images\\slides\\10-casos-de-exito-1.png": {
+    "mtime": 1781651510.060918,
+    "ast_hash": "d052d3220a7853848d5f782ebace32c3",
+    "semantic_hash": "d052d3220a7853848d5f782ebace32c3"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\frontend\\public\\assets\\images\\slides\\11-casos-de-exito-2.png": {
+    "mtime": 1781651510.061918,
+    "ast_hash": "c0ffbd5eb954c3b383036858ec7a755a",
+    "semantic_hash": "c0ffbd5eb954c3b383036858ec7a755a"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\frontend\\public\\assets\\images\\slides\\12-caso-consultatio.png": {
+    "mtime": 1781651510.062918,
+    "ast_hash": "23c1c12915f7bd65532c07abeb2a4044",
+    "semantic_hash": "23c1c12915f7bd65532c07abeb2a4044"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\frontend\\public\\assets\\images\\slides\\13-caso-novopath.png": {
+    "mtime": 1781651510.063918,
+    "ast_hash": "b11d91d64a99f18c69524b580ee9f586",
+    "semantic_hash": "b11d91d64a99f18c69524b580ee9f586"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\frontend\\public\\assets\\images\\slides\\14-caso-gamma.png": {
+    "mtime": 1781651510.0649178,
+    "ast_hash": "b99897ca8cf2b80da6f92d56eb1d0f83",
+    "semantic_hash": "b99897ca8cf2b80da6f92d56eb1d0f83"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\frontend\\public\\assets\\images\\slides\\15-caso-ebmetrics.png": {
+    "mtime": 1781651510.0659177,
+    "ast_hash": "1b39eec4b6943fc6e13f7435141bf1a4",
+    "semantic_hash": "1b39eec4b6943fc6e13f7435141bf1a4"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\frontend\\public\\assets\\images\\slides\\16-contratapa.png": {
+    "mtime": 1781651510.0669177,
+    "ast_hash": "aa596072c3a9146c17668ed6815ce00c",
+    "semantic_hash": "aa596072c3a9146c17668ed6815ce00c"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\frontend\\public\\assets\\images\\slides\\2-simple-lo-complejo.png": {
+    "mtime": 1781651510.0679176,
+    "ast_hash": "4a260e39e394510a59e001badd236276",
+    "semantic_hash": "4a260e39e394510a59e001badd236276"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\frontend\\public\\assets\\images\\slides\\3-que-hacemos.png": {
+    "mtime": 1781651510.0689175,
+    "ast_hash": "f55a60c8135dd25793e97bd31f878cb4",
+    "semantic_hash": "f55a60c8135dd25793e97bd31f878cb4"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\frontend\\public\\assets\\images\\slides\\4-desarrollo.png": {
+    "mtime": 1781651510.0709162,
+    "ast_hash": "f9cc7a270d5d3262ba5f26afb8d9075d",
+    "semantic_hash": "f9cc7a270d5d3262ba5f26afb8d9075d"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\frontend\\public\\assets\\images\\slides\\5-consultoria.png": {
+    "mtime": 1781651510.0719178,
+    "ast_hash": "5104ea83812eaebab36a3409b9f46f47",
+    "semantic_hash": "5104ea83812eaebab36a3409b9f46f47"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\frontend\\public\\assets\\images\\slides\\6-inteligencia-artificial.png": {
+    "mtime": 1781651510.0739186,
+    "ast_hash": "88bb3f1a191d9beb567370de5dde93b2",
+    "semantic_hash": "88bb3f1a191d9beb567370de5dde93b2"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\frontend\\public\\assets\\images\\slides\\7-data-science.png": {
+    "mtime": 1781651510.0749173,
+    "ast_hash": "349f9e0515f7db7fdcf32cb2462f7559",
+    "semantic_hash": "349f9e0515f7db7fdcf32cb2462f7559"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\frontend\\public\\assets\\images\\slides\\8-qa-testing.png": {
+    "mtime": 1781651510.075918,
+    "ast_hash": "cdf2670f1fccf61e0af2cec57b43190b",
+    "semantic_hash": "cdf2670f1fccf61e0af2cec57b43190b"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\frontend\\public\\assets\\images\\slides\\contratapa.old.png": {
+    "mtime": 1781651510.0779173,
+    "ast_hash": "5cd6f63488ec71f723e48e31b10b481e",
+    "semantic_hash": "5cd6f63488ec71f723e48e31b10b481e"
+  },
+  "C:\\Users\\Luka\\Documents\\GitHub\\TestLangChain\\web-novit-ai\\src\\frontend\\public\\assets\\images\\slides\\portada.old.png": {
+    "mtime": 1781651510.0789182,
+    "ast_hash": "1fd8f36cb2e5298657546ca2c6a18e43",
+    "semantic_hash": "1fd8f36cb2e5298657546ca2c6a18e43"
+  }
+}
