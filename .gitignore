@@ -220,3 +220,5 @@ __marimo__/
 
 MarkDownsLLM/
 gemini/
+# Headroom-AI - logs de ahorro de tokens (datos locales)
+Python/logs/headroom_savings.csv

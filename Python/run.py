@@ -26,8 +26,30 @@ def check_keys():
             active_apis.append("OpenAI")
         print(f"\n[INFO] APIs activas detectadas: {', '.join(active_apis)}")
 
+def check_ollama():
+    """
+    Verifica si el servidor de Ollama local está activo y tiene cargado
+    el modelo gemma4:e2b, imprimiendo un aviso si arrancó con él.
+    """
+    try:
+        import requests
+        res = requests.get("http://localhost:11434/api/tags", timeout=1.5)
+        if res.status_code == 200:
+            models = res.json().get("models", [])
+            for model_info in models:
+                name = model_info.get("name", "")
+                if name == "gemma4:e2b" or name.startswith("gemma4:e2b"):
+                    print("\n" + "*" * 72)
+                    print("   [AVISO]: ¡El agente arrancó con Gemma 4 e2b de Ollama (local) activo!")
+                    print("*" * 72 + "\n")
+                    return True
+    except Exception:
+        pass
+    return False
+
 def main():
     load_dotenv()
+    check_ollama()
     check_keys()
 
     # Asegurar compatibilidad de variables de entorno de autenticación

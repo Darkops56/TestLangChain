@@ -6,9 +6,15 @@ from dotenv import load_dotenv
 from pydantic import BaseModel, Field
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_openai import ChatOpenAI
+try:
+    from langchain_community.chat_models import ChatOllama
+except ImportError:
+    from langchain_ollama import ChatOllama
+from langchain_community.llms import Ollama
 from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
 from src.state import MultiPlatformState, PlatformContent
 from src.tools import generar_imagen
+from src.headroom_compressor import compress_messages, log_llm_invocation
 
 load_dotenv()
 
@@ -104,8 +110,33 @@ def invoke_llm_with_retry(llm, prompt_sistema: str, prompt_human: str):
 # Vincular salida estructurada con fallback dinámico y reintentos
 def invoke_with_fallback(prompt_sistema: str, prompt_human: str, schema) -> MultiPlatformOutput:
     errors = []
-    
-    # 1. Intentar con Gemini
+
+    # --- Comprimir contexto con Headroom-AI antes de llamar a cualquier LLM ---
+    # Esto reduce 60-95% los tokens de entrada. El ahorro se loguea en logs/headroom_savings.csv
+    messages_raw = [("system", prompt_sistema), ("human", prompt_human)]
+    messages_comprimidos = compress_messages(messages_raw)
+    prompt_sistema_c = next((c for r, c in messages_comprimidos if r == "system"), prompt_sistema)
+    prompt_human_c = next((c for r, c in messages_comprimidos if r == "human"), prompt_human)
+    # --------------------------------------------------------------------------
+
+    # 1. Intentar con Ollama local (gemma4:e2b) como modelo principal
+    try:
+        print("[INFO] Intentando generación estructurada con Ollama local (gemma4:e2b)...")
+        llm_ollama = ChatOllama(
+            model="gemma4:e2b",
+            temperature=0.7,
+        ).with_structured_output(schema)
+        # Llamada con reintento resiliente usando mensajes comprimidos
+        resultado = invoke_llm_with_retry(llm_ollama, prompt_sistema_c, prompt_human_c)
+        # Registrar tokens de salida generados por gemma4:e2b
+        log_llm_invocation(resultado.model_dump_json())
+        return resultado
+    except Exception as e:
+        error_msg = f"Ollama falló después de reintentos: {e}"
+        print(f"[WARN] {error_msg}")
+        errors.append(error_msg)
+
+    # 2. Intentar con Gemini (fallback)
     google_key = os.getenv("GOOGLE_API_KEY") or os.getenv("GEMINI_API_KEY")
     if google_key and google_key != "mock_api_key_for_testing":
         try:
@@ -114,15 +145,15 @@ def invoke_with_fallback(prompt_sistema: str, prompt_human: str, schema) -> Mult
                 model="models/gemini-2.5-flash",
                 temperature=0.7,
             ).with_structured_output(schema)
-            # Llamada con reintento resiliente
-            resultado = invoke_llm_with_retry(llm_gemini, prompt_sistema, prompt_human)
+            resultado = invoke_llm_with_retry(llm_gemini, prompt_sistema_c, prompt_human_c)
+            log_llm_invocation(resultado.model_dump_json())
             return resultado
         except Exception as e:
             error_msg = f"Gemini falló después de reintentos: {e}"
             print(f"[WARN] {error_msg}")
             errors.append(error_msg)
-            
-    # 2. Intentar con OpenAI
+
+    # 3. Intentar con OpenAI (fallback)
     openai_key = os.getenv("OPENAI_API_KEY")
     if openai_key:
         try:
@@ -132,14 +163,14 @@ def invoke_with_fallback(prompt_sistema: str, prompt_human: str, schema) -> Mult
                 temperature=0.7,
                 api_key=openai_key
             ).with_structured_output(schema)
-            # Llamada con reintento resiliente
-            resultado = invoke_llm_with_retry(llm_openai, prompt_sistema, prompt_human)
+            resultado = invoke_llm_with_retry(llm_openai, prompt_sistema_c, prompt_human_c)
+            log_llm_invocation(resultado.model_dump_json())
             return resultado
         except Exception as e:
             error_msg = f"OpenAI falló después de reintentos: {e}"
             print(f"[WARN] {error_msg}")
             errors.append(error_msg)
-            
+
     # 3. Si ambos fallan, levantar excepción para gatillar el fallback estático
     raise RuntimeError(f"No se pudo completar la generación estructurada con ningún LLM disponible. Errores: {errors}")
 
@@ -290,16 +321,51 @@ def generator_node(state: MultiPlatformState) -> dict:
             dict_respuesta["whatsapp"] = resultado.whatsapp
             
     except Exception as e:
-        print(f"[WARN] Error en la generación estructurada: {e}. Usando fallback.")
+        print(f"[WARN] Error en la generación estructurada: {e}. Usando fallback de Ollama local...")
         dict_respuesta = {}
-        for plat in platforms_to_generate:
-            text_fb = f"Contenido de fallback para {plat} sobre: {state['user_prompt']}. IA."
-            if plat in ["tiktok", "instagram"]:
-                text_fb += " #tech"
-            dict_respuesta[plat] = SinglePlatformOutput(
-                text=text_fb,
-                image_prompt=f"Ilustración digital sobre {state['user_prompt']}"
+        try:
+            # Usar el modelo local para generar el texto plano de fallback con temperatura 0.0
+            llm_plano = Ollama(
+                model="gemma4:e2b",
+                temperature=0.0,
             )
+            for plat in platforms_to_generate:
+                prompt_fb = (
+                    f"Genera un texto de marketing corto en español para {plat.upper()} "
+                    f"sobre el tema: '{state['user_prompt']}'. "
+                    f"Debe incluir la palabra 'IA'. "
+                    f"Si es para TikTok o Instagram, incluye hashtags (#). "
+                    f"Devuelve solo el texto limpio sin comentarios ni formato."
+                )
+                # Comprimir y trackear tokens también en fallback
+                fb_msgs = compress_messages([("human", prompt_fb)])
+                fb_prompt = fb_msgs[0][1] if fb_msgs else prompt_fb
+                text_fb = llm_plano.invoke(fb_prompt).strip()
+                log_llm_invocation(text_fb)
+                
+                # También generar el prompt de imagen
+                prompt_img_fb = (
+                    f"Write a 1-sentence image description in English for a post about: '{state['user_prompt']}'"
+                )
+                img_msgs = compress_messages([("human", prompt_img_fb)])
+                img_prompt = img_msgs[0][1] if img_msgs else prompt_img_fb
+                img_prompt_fb = llm_plano.invoke(img_prompt).strip()
+                log_llm_invocation(img_prompt_fb)
+                
+                dict_respuesta[plat] = SinglePlatformOutput(
+                    text=text_fb,
+                    image_prompt=img_prompt_fb
+                )
+        except Exception as ollama_err:
+            print(f"[WARN] Falló la generación local con Ollama: {ollama_err}. Usando fallback estático.")
+            for plat in platforms_to_generate:
+                text_fb = f"Contenido de fallback para {plat} sobre: {state['user_prompt']}. IA."
+                if plat in ["tiktok", "instagram"]:
+                    text_fb += " #tech"
+                dict_respuesta[plat] = SinglePlatformOutput(
+                    text=text_fb,
+                    image_prompt=f"Ilustración digital sobre {state['user_prompt']}"
+                )
 
     # Actualizar salidas manteniendo las aprobadas anteriormente intactas
     outputs_actualizados = dict(outputs)
@@ -410,7 +476,8 @@ def nodo_corrector_economico(state: MultiPlatformState) -> dict:
 def image_generator_node(state: MultiPlatformState) -> dict:
     """
     Nodo que recorre las plataformas y, para cada una con contenido de texto validado,
-    genera la imagen correspondiente si aún no se ha generado en esta sesión.
+    genera un prompt de imagen detallado usando gemma4:12b (temp 0.8) y luego crea
+    la imagen correspondiente.
     """
     outputs = state.get("outputs", {}) or {}
     image_paths = dict(state.get("image_paths", {}) or {})
@@ -419,17 +486,52 @@ def image_generator_node(state: MultiPlatformState) -> dict:
     print(f"\n--- [Generador de Imágenes] Procesando imágenes para plataformas validadas ---")
     
     for plat, contenido in outputs.items():
-        # Solo generar si el texto fue validado localmente
         if not contenido.get("is_valid", False):
             print(f"  [{plat.upper()}] Omitido (texto no validado).")
             continue
             
-        # Si ya existe una ruta de imagen válida en el estado, la conservamos
         if plat in image_paths and image_paths[plat] and os.path.exists(image_paths[plat]):
             print(f"  [{plat.upper()}] Ya cuenta con imagen: {image_paths[plat]}")
             continue
-            
-        image_prompt = contenido.get("image_prompt", "")
+
+        texto_publicacion = contenido.get("text", "")
+        image_prompt_base = contenido.get("image_prompt", "")
+
+        # Generar prompt de imagen detallado con gemma4:12b a temperatura 0.8
+        try:
+            print(f"  [{plat.upper()}] Generando prompt de imagen con gemma4:12b (temp 0.8)...")
+            llm_img = ChatOllama(
+                model="gemma4:12b",
+                temperature=0.8,
+            )
+            sys_prompt = (
+                "Eres un experto diseñador gráfico y generador de prompts para IA de imágenes. "
+                "Tu tarea es crear un prompt detallado en INGLÉS para generar una imagen de marketing "
+                "basada en el texto de una publicación y una idea inicial proporcionada. "
+                "El prompt debe describir colores, composición, iluminación, estilo artístico y estado de ánimo. "
+                "Responde SOLO con el prompt de imagen, sin comentarios adicionales."
+            )
+            human_prompt = (
+                f"Texto de la publicación: '{texto_publicacion}'\n"
+                f"Idea inicial: '{image_prompt_base}'\n"
+                f"Plataforma: {plat.upper()}\n\n"
+                f"Genera un prompt detallado en inglés para crear una imagen impactante para esta publicación."
+            )
+            # Comprimir contexto y trackear tokens
+            img_msgs = compress_messages([("system", sys_prompt), ("human", human_prompt)])
+            sys_c = next((c for r, c in img_msgs if r == "system"), sys_prompt)
+            human_c = next((c for r, c in img_msgs if r == "human"), human_prompt)
+            raw_prompt = llm_img.invoke([
+                ("system", sys_c),
+                ("human", human_c)
+            ]).content.strip()
+            log_llm_invocation(raw_prompt)
+            image_prompt = raw_prompt if raw_prompt else (image_prompt_base or texto_publicacion)
+            print(f"  [{plat.upper()}] Prompt de imagen generado ({len(image_prompt)} chars)")
+        except Exception as e:
+            print(f"  [{plat.upper()}] Error generando prompt con gemma4:12b: {e}. Usando prompt base.")
+            image_prompt = image_prompt_base or texto_publicacion
+
         if not image_prompt:
             print(f"  [{plat.upper()}] Advertencia: No hay prompt de imagen.")
             continue

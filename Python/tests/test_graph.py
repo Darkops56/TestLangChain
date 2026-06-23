@@ -3,8 +3,10 @@ from src.graph import app_grafo
 from src.state import MultiPlatformState
 from src.nodes import MultiPlatformOutput, GmailOutput
 
+@patch("src.nodes.ChatOllama")
 @patch("src.nodes.llm_estructurado")
-def test_graph_resolves_on_second_attempt(mock_llm_structured):
+def test_graph_resolves_on_second_attempt(mock_llm_structured, mock_chat_ollama):
+    mock_chat_ollama.side_effect = Exception("Ollama no disponible en test")
     # Setup mocks for 1st and 2nd attempts with specific Pydantic output classes
     resp_1 = MultiPlatformOutput(
         gmail=GmailOutput(text="Creative post without required keyword", image_prompt="image 1")
@@ -43,8 +45,10 @@ def test_graph_resolves_on_second_attempt(mock_llm_structured):
     assert state_info_final.values["is_approved"] is True
 
 
+@patch("src.nodes.ChatOllama")
 @patch("src.nodes.llm_estructurado")
-def test_graph_stops_at_max_attempts_anti_loop(mock_llm_structured):
+def test_graph_stops_at_max_attempts_anti_loop(mock_llm_structured, mock_chat_ollama):
+    mock_chat_ollama.side_effect = Exception("Ollama no disponible en test")
     # Setup mock that always returns defective text (violates rules)
     resp = MultiPlatformOutput(
         gmail=GmailOutput(text="Defective content", image_prompt="image")
