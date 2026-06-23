@@ -13,3 +13,6 @@ class MultiPlatformState(TypedDict):
     retry_count: int
     platform_feedback: Dict[str, str]
     is_approved: bool
+    image_paths: Dict[str, str]
+    publication_results: Dict[str, bool]
+    publication_errors: Dict[str, List[str]]

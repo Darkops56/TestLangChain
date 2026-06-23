@@ -6,7 +6,9 @@ from dotenv import load_dotenv
 from pydantic import BaseModel, Field
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_openai import ChatOpenAI
+from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
 from src.state import MultiPlatformState, PlatformContent
+from src.tools import generar_imagen
 
 load_dotenv()
 
@@ -21,13 +23,8 @@ if "GEMINI_API_KEY" in os.environ and "GOOGLE_API_KEY" not in os.environ:
 if not os.getenv("GOOGLE_API_KEY"):
     os.environ["GOOGLE_API_KEY"] = "mock_api_key_for_testing"
 
-# Inicializar modelos de lenguaje (Comentado por requerimiento de fallback dinámico)
-# llm_creativo = ChatGoogleGenerativeAI(
-#     model="models/gemini-2.5-flash",
-#     temperature=0.7,
-# )
 
-# --- Estrategia 1: Restricciones específicas a nivel de modelos Pydantic ---
+# --- Restricciones específicas a nivel de modelos Pydantic con soporte de Imagen ---
 
 class GmailOutput(BaseModel):
     text: str = Field(
@@ -39,7 +36,7 @@ class GmailOutput(BaseModel):
     )
     image_prompt: Optional[str] = Field(
         default="", 
-        description="[COMENTADO] No generar."
+        description="Propuesta de imagen detallada y formal para adjuntar al correo sobre el tema."
     )
 
 class TikTokOutput(BaseModel):
@@ -51,7 +48,7 @@ class TikTokOutput(BaseModel):
     )
     image_prompt: Optional[str] = Field(
         default="", 
-        description="[COMENTADO] No generar."
+        description="Descripción de la imagen o miniatura de alta retención visual en formato vertical para TikTok."
     )
 
 class InstagramOutput(BaseModel):
@@ -63,7 +60,7 @@ class InstagramOutput(BaseModel):
     )
     image_prompt: Optional[str] = Field(
         default="", 
-        description="[COMENTADO] No generar."
+        description="Detalle visual estético para el post de Instagram (fotografía, carrusel, infografía)."
     )
 
 class WhatsAppOutput(BaseModel):
@@ -76,7 +73,7 @@ class WhatsAppOutput(BaseModel):
     )
     image_prompt: Optional[str] = Field(
         default="", 
-        description="[COMENTADO] No generar."
+        description="Idea o descripción de la tarjeta gráfica/imagen para adjuntar al mensaje de WhatsApp."
     )
 
 class SinglePlatformOutput(BaseModel):
@@ -89,7 +86,22 @@ class MultiPlatformOutput(BaseModel):
     instagram: Optional[InstagramOutput] = Field(None, description="Contenido estructurado para Instagram si ha sido solicitado.")
     whatsapp: Optional[WhatsAppOutput] = Field(None, description="Contenido estructurado para WhatsApp si ha sido solicitado.")
 
-# Vincular salida estructurada con fallback dinámico
+
+# Función de invocación decorada con Tenacity para reintentos exponenciales resilientes
+@retry(
+    stop=stop_after_attempt(3),
+    wait=wait_exponential(multiplier=1, min=2, max=10),
+    retry=retry_if_exception_type(Exception),
+    reraise=True
+)
+def invoke_llm_with_retry(llm, prompt_sistema: str, prompt_human: str):
+    return llm.invoke([
+        ("system", prompt_sistema),
+        ("human", prompt_human)
+    ])
+
+
+# Vincular salida estructurada con fallback dinámico y reintentos
 def invoke_with_fallback(prompt_sistema: str, prompt_human: str, schema) -> MultiPlatformOutput:
     errors = []
     
@@ -102,13 +114,11 @@ def invoke_with_fallback(prompt_sistema: str, prompt_human: str, schema) -> Mult
                 model="models/gemini-2.5-flash",
                 temperature=0.7,
             ).with_structured_output(schema)
-            resultado = llm_gemini.invoke([
-                ("system", prompt_sistema),
-                ("human", prompt_human)
-            ])
+            # Llamada con reintento resiliente
+            resultado = invoke_llm_with_retry(llm_gemini, prompt_sistema, prompt_human)
             return resultado
         except Exception as e:
-            error_msg = f"Gemini falló: {e}"
+            error_msg = f"Gemini falló después de reintentos: {e}"
             print(f"[WARN] {error_msg}")
             errors.append(error_msg)
             
@@ -122,18 +132,17 @@ def invoke_with_fallback(prompt_sistema: str, prompt_human: str, schema) -> Mult
                 temperature=0.7,
                 api_key=openai_key
             ).with_structured_output(schema)
-            resultado = llm_openai.invoke([
-                ("system", prompt_sistema),
-                ("human", prompt_human)
-            ])
+            # Llamada con reintento resiliente
+            resultado = invoke_llm_with_retry(llm_openai, prompt_sistema, prompt_human)
             return resultado
         except Exception as e:
-            error_msg = f"OpenAI falló: {e}"
+            error_msg = f"OpenAI falló después de reintentos: {e}"
             print(f"[WARN] {error_msg}")
             errors.append(error_msg)
             
     # 3. Si ambos fallan, levantar excepción para gatillar el fallback estático
     raise RuntimeError(f"No se pudo completar la generación estructurada con ningún LLM disponible. Errores: {errors}")
+
 
 class StructuredLLMFallbackWrapper:
     def invoke(self, messages, *args, **kwargs):
@@ -198,7 +207,7 @@ def generator_node(state: MultiPlatformState) -> dict:
 
     print(f"\n--- [IA] Generando Contenido Multiplataforma para {platforms_to_generate} (Intento {retry_count}/3) ---")
 
-    # --- Estrategia 2: Prompt de Sistema Agresivo con el Feedback ---
+    # --- Prompt de Sistema Agresivo con el Feedback ---
     feedback_lines = []
     for plat in platforms_to_generate:
         error_msg = platform_feedback.get(plat)
@@ -252,11 +261,11 @@ def generator_node(state: MultiPlatformState) -> dict:
 
     prompt_sistema = (
         "Sos un copywriter profesional experto en redes sociales. Tu tarea es generar "
-        "contenido de marketing adaptado a las siguientes plataformas solicitadas:\n"
+        "contenido de marketing y conceptos de imágenes adaptados a las siguientes plataformas solicitadas:\n"
         + "\n".join(restricciones)
         + "\n\n"
         + few_shot_examples
-        + "\nResponde llenando únicamente los campos correspondientes del formato estructurado. "
+        + "\nResponde llenando los campos de texto e image_prompt correspondientes del formato estructurado. "
         "Debes prestar especial atención a los requisitos de caracteres, hashtags (#), etiquetas HTML y "
         "palabras clave obligatorias definidos en los esquemas Pydantic. Recuerda siempre respetar el buffer de seguridad del 10%."
     )
@@ -284,13 +293,12 @@ def generator_node(state: MultiPlatformState) -> dict:
         print(f"[WARN] Error en la generación estructurada: {e}. Usando fallback.")
         dict_respuesta = {}
         for plat in platforms_to_generate:
-            # Fallback seguro con "IA" y hashtags si es necesario para evitar fallos de tests
             text_fb = f"Contenido de fallback para {plat} sobre: {state['user_prompt']}. IA."
             if plat in ["tiktok", "instagram"]:
                 text_fb += " #tech"
             dict_respuesta[plat] = SinglePlatformOutput(
                 text=text_fb,
-                image_prompt="A generic creative social media illustration."
+                image_prompt=f"Ilustración digital sobre {state['user_prompt']}"
             )
 
     # Actualizar salidas manteniendo las aprobadas anteriormente intactas
@@ -397,3 +405,45 @@ def nodo_corrector_economico(state: MultiPlatformState) -> dict:
             print(f"  [{plat.upper()}] [FAIL] RECHAZADO: {errores}")
 
     return {"outputs": outputs_evaluados, "platform_feedback": platform_feedback}
+
+
+def image_generator_node(state: MultiPlatformState) -> dict:
+    """
+    Nodo que recorre las plataformas y, para cada una con contenido de texto validado,
+    genera la imagen correspondiente si aún no se ha generado en esta sesión.
+    """
+    outputs = state.get("outputs", {}) or {}
+    image_paths = dict(state.get("image_paths", {}) or {})
+    publication_errors = dict(state.get("publication_errors", {}) or {})
+    
+    print(f"\n--- [Generador de Imágenes] Procesando imágenes para plataformas validadas ---")
+    
+    for plat, contenido in outputs.items():
+        # Solo generar si el texto fue validado localmente
+        if not contenido.get("is_valid", False):
+            print(f"  [{plat.upper()}] Omitido (texto no validado).")
+            continue
+            
+        # Si ya existe una ruta de imagen válida en el estado, la conservamos
+        if plat in image_paths and image_paths[plat] and os.path.exists(image_paths[plat]):
+            print(f"  [{plat.upper()}] Ya cuenta con imagen: {image_paths[plat]}")
+            continue
+            
+        image_prompt = contenido.get("image_prompt", "")
+        if not image_prompt:
+            print(f"  [{plat.upper()}] Advertencia: No hay prompt de imagen.")
+            continue
+            
+        try:
+            print(f"  [{plat.upper()}] Generando imagen...")
+            path = generar_imagen(image_prompt, plat)
+            image_paths[plat] = path
+            print(f"  [{plat.upper()}] Imagen generada en: {path}")
+        except Exception as e:
+            err_str = f"Error al generar imagen para {plat}: {e}"
+            print(f"  ❌ {err_str}")
+            if plat not in publication_errors:
+                publication_errors[plat] = []
+            publication_errors[plat].append(err_str)
+            
+    return {"image_paths": image_paths, "publication_errors": publication_errors}

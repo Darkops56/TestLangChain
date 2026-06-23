@@ -2,6 +2,7 @@ from unittest.mock import MagicMock, patch
 from src.nodes import (
     generator_node, 
     nodo_corrector_economico, 
+    image_generator_node,
     MultiPlatformOutput, 
     GmailOutput
 )
@@ -111,3 +112,42 @@ def test_economic_corrector_node_rejects():
     assert output["outputs"]["whatsapp"]["is_valid"] is False
     assert "whatsapp" in output["platform_feedback"]
     assert "HTML" in output["platform_feedback"]["whatsapp"]
+
+
+@patch("src.nodes.generar_imagen")
+def test_image_generator_node(mock_generar_imagen):
+    mock_generar_imagen.return_value = "/path/to/mock_image.png"
+    
+    state: MultiPlatformState = {
+        "user_prompt": "Test image generator",
+        "platforms": ["gmail", "tiktok"],
+        "outputs": {
+            "gmail": PlatformContent(
+                text="Texto válido con IA.",
+                image_prompt="Una imagen formal de IA.",
+                is_valid=True,
+                errors=[]
+            ),
+            "tiktok": PlatformContent(
+                text="Texto inválido sin hashtag.",
+                image_prompt="Imagen tiktok.",
+                is_valid=False,
+                errors=["Falta hashtag"]
+            )
+        },
+        "retry_count": 1,
+        "platform_feedback": {},
+        "is_approved": False,
+        "image_paths": {},
+        "publication_results": {},
+        "publication_errors": {}
+    }
+    
+    output = image_generator_node(state)
+    
+    # Debe generar imagen solo para gmail, ya que su texto es válido
+    assert "gmail" in output["image_paths"]
+    assert output["image_paths"]["gmail"] == "/path/to/mock_image.png"
+    assert "tiktok" not in output["image_paths"]
+    mock_generar_imagen.assert_called_once_with("Una imagen formal de IA.", "gmail")
+

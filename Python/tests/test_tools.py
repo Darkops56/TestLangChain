@@ -3,7 +3,8 @@ from src.tools import (
     AdaptadorTikTok, 
     AdaptadorInstagram, 
     AdaptadorWhatsApp, 
-    publicar_multiplataforma
+    publicar_multiplataforma,
+    generar_imagen
 )
 
 def test_gmail_adapter():
@@ -64,3 +65,16 @@ def test_publish_multiplatform_parallel():
     assert results["tiktok"] is True
     assert results["instagram"] is True
     assert results["whatsapp"] is True
+
+
+def test_generar_imagen_local():
+    import os
+    path = generar_imagen("Concept test prompt", "gmail")
+    assert os.path.exists(path)
+    assert path.endswith(".png")
+    # Limpieza
+    try:
+        os.remove(path)
+    except Exception:
+        pass
+
