@@ -1,0 +1,184 @@
+<div class="page chat-only" [class.notebook-active]="notebookState() !== 'closed' && notebookState() !== 'stowed'">
+  <main>
+    <!-- Chat Interface -->
+    <section class="hero">
+      <!-- Chat Header -->
+      <div class="chat-header">
+        <div class="chat-avatar-info">
+          <img src="assets/images/novit-logo-dark.png" alt="Novit" class="chat-name-logo" />
+          <span class="chat-status">
+            Online
+            <button type="button" class="auto-tts-toggle" [class.auto-tts-on]="autoTTS()" (click)="toggleAutoTTS()" title="Auto-play voice responses">
+              🔊 {{ autoTTS() ? 'Auto' : 'Mute' }}
+            </button>
+          </span>
+        </div>
+        <div class="chat-header-right">
+          <span class="header-rate-info">
+            <span class="rate-shield">🛡</span>
+            {{ remainingMessages() }}/{{ MAX_MESSAGES }}
+          </span>
+          <div class="header-rate-bar"><div class="header-rate-bar-fill" [style.width.%]="(remainingMessages() / MAX_MESSAGES) * 100"></div></div>
+        </div>
+      </div>
+
+      <!-- Chat Flow -->
+      <div class="chat-flow-wrapper">
+      <div class="chat-flow" #chatFlow aria-live="polite">
+        <!-- Bot Message 1 — Greeting -->
+        <div class="bot-msg">
+          <div class="msg-dot"><img src="assets/images/novit-isologo.png" alt="N" class="msg-dot-logo" /></div>
+          <div class="bot-bubble">
+            <h2 class="bubble-heading">{{ greetingHeading() }}</h2>
+            <p class="bubble-text">{{ greetingBody() }}</p>
+            <div class="tts-btn" (click)="playTTS(greetingTts(), 'msg-1')" [class.tts-active]="ttsPlaying() === 'msg-1'"><span class="tts-icon">♪</span> {{ ttsPlaying() === 'msg-1' ? (isEnglish() ? 'Playing...' : 'Reproduciendo...') : (isEnglish() ? 'Listen · AI Voice' : 'Escuchar · Voz IA') }}</div>
+          </div>
+        </div>
+
+        <!-- Bot Message 2 — What We Do + CTA -->
+        <div class="bot-msg">
+          <div class="msg-dot"><img src="assets/images/novit-isologo.png" alt="N" class="msg-dot-logo" /></div>
+          <div class="bot-bubble">
+            <p class="bubble-text">{{ introBody() }}</p>
+            <div class="tts-btn" (click)="playTTS(introTts(), 'msg-2')" [class.tts-active]="ttsPlaying() === 'msg-2'"><span class="tts-icon">♪</span> {{ ttsPlaying() === 'msg-2' ? (isEnglish() ? 'Playing...' : 'Reproduciendo...') : (isEnglish() ? 'Listen · AI Voice' : 'Escuchar · Voz IA') }}</div>
+          </div>
+        </div>
+
+
+          <!-- Dynamic messages from conversation -->
+          @for (message of dynamicMessages(); track message.id) {
+            <div class="bot-msg" [class.user-msg-row]="message.role === 'user'" [class.bot-msg-enter]="message.role === 'bot'">
+              <div class="msg-dot">
+                @if (message.role === 'user') {
+                  <span>👤</span>
+                } @else {
+                  <img src="assets/images/novit-isologo.png" alt="N" class="msg-dot-logo" />
+                }
+              </div>
+              <div class="bot-bubble" [class.user-bubble]="message.role === 'user'" [class.failed-bubble]="message.failed">
+                @if (message.audioUrl) {
+                  <div class="audio-bubble">
+                    <audio [src]="message.audioUrl" controls preload="metadata"></audio>
+                  </div>
+                  @if (message.transcription === '...') {
+                    <div class="transcribing-inline">
+                      <span class="typing-dot"></span>
+                      <span class="typing-dot"></span>
+                      <span class="typing-dot"></span>
+                    </div>
+                  } @else if (message.transcription) {
+                    <p class="audio-transcription">{{ message.transcription }}</p>
+                  }
+                } @else if (message.isVoice && message.role === 'user') {
+                  <p class="bubble-text voice-label">🎙 <span [innerHTML]="renderMarkdown(message.content)"></span></p>
+                } @else {
+                  <p class="bubble-text" [innerHTML]="renderMarkdown(message.content)"></p>
+                }
+                @if (message.failed) {
+                  <div class="msg-fail-row">
+                    <span class="msg-fail-label">⚠ {{ message.failReason ?? 'Failed to send' }}</span>
+                    <button type="button" class="resend-btn" [disabled]="remainingMessages() <= 0 || isSending()" (click)="resendMessage(message)">↻ Resend</button>
+                  </div>
+                }
+                @if (message.role === 'bot') {
+                  <div class="tts-btn" (click)="playTTS(message.content, message.id)" [class.tts-active]="ttsPlaying() === message.id"><span class="tts-icon">♪</span> {{ ttsPlaying() === message.id ? 'Playing...' : 'Listen · AI Voice' }}</div>
+                }
+                @if (formatTimestamp(message.createdAt); as ts) {
+                  <span class="msg-timestamp">{{ ts }}</span>
+                }
+              </div>
+            </div>
+          }
+
+          <!-- Typing indicator -->
+          @if (isTyping()) {
+            <div class="bot-msg bot-msg-enter">
+              <div class="msg-dot"><img src="assets/images/novit-isologo.png" alt="N" class="msg-dot-logo" /></div>
+              <div class="bot-bubble typing-bubble">
+                <div class="typing-indicator">
+                  <span class="typing-dot"></span>
+                  <span class="typing-dot"></span>
+                  <span class="typing-dot"></span>
+                </div>
+              </div>
+            </div>
+          }
+
+      </div>
+
+        <!-- Scroll-down indicator -->
+        @if (showScrollIndicator()) {
+          <button type="button" class="scroll-indicator" (click)="scrollToBottomClick()" aria-label="Scroll to see more messages">
+            <span class="scroll-arrow">⌄</span>
+          </button>
+        }
+      </div>
+
+      <!-- Prompt Bar -->
+      <form class="prompt-bar" (submit)="sendPrompt($event)">
+        <div class="prompt-left">
+          <span class="prompt-prefix">&gt;_</span>
+          <input name="prompt" [ngModel]="prompt()" (ngModelChange)="prompt.set($event)" maxlength="1000" placeholder="Type your question or hold mic to talk..." />
+        </div>
+        <div class="prompt-right">
+          <span class="hold-label" [class.hold-error]="voiceError()" [class.hold-recording]="isRecording()">{{ voiceError() ?? (isTranscribing() ? 'Transcribing...' : isRecording() ? (isEnglish() ? 'Release to send' : 'Soltar para enviar') : 'Hold to talk') }}</span>
+          <button type="button" class="mic-btn" [class.mic-recording]="isRecording()" [class.mic-transcribing]="isTranscribing()" aria-label="Hold to record" (mousedown)="startRecording()" (mouseup)="stopRecording()" (mouseleave)="stopRecording()" (touchstart)="$event.preventDefault(); startRecording()" (touchend)="$event.preventDefault(); stopRecording()" (touchcancel)="$event.preventDefault(); stopRecording()">🎙</button>
+          <button type="submit" class="ask-btn" [disabled]="!canSend()">Ask →</button>
+        </div>
+      </form>
+
+      <!-- Rate Badge (compact footer) -->
+      <div class="rate-badge">
+        <span class="rate-shield">🛡</span>
+        <span>{{ remainingMessages() }} / {{ MAX_MESSAGES }}</span>
+        <div class="rate-bar"><div class="rate-bar-fill" [style.width.%]="(remainingMessages() / MAX_MESSAGES) * 100"></div></div>
+      </div>
+    </section>
+
+    <!-- Notebook Panel — persistent aside across cover / open / stowing states -->
+    @if (notebookState() !== 'closed' && notebookState() !== 'stowed') {
+      <aside class="notebook-panel"
+             [class.notebook-cover-view]="notebookState() === 'cover'"
+             [class.notebook-open-view]="notebookState() === 'open'"
+             [class.notebook-stowing-view]="notebookState() === 'stowing' || notebookState() === 'closing'">
+
+        <!-- Cover view -->
+        @if (notebookState() === 'cover') {
+          <div class="notebook notebook-cover-only" (click)="openNotebookFromCover()">
+            <div class="notebook-cover-face">
+              <img [src]="coverSlide().url" [alt]="coverSlide().title" class="notebook-cover-art" />
+              <div class="notebook-cover-sheen"></div>
+              <div class="cover-metal-border"></div>
+            </div>
+          </div>
+        }
+
+        <!-- Open flipbook — persists during stowing so content stays visible while sliding out -->
+        @if (notebookState() === 'open' || notebookState() === 'stowing') {
+          <div class="flipbook-wrapper">
+            <div class="flipbook-container" #flipBookContainer>
+              <div class="stpf-page stpf-cover" data-density="hard">
+                <img [src]="coverSlide().url" [alt]="coverSlide().title" class="stpf-cover-img" />
+              </div>
+              @for (page of innerSlidePages(); track page.id; let i = $index) {
+                <div class="stpf-page stpf-content">
+                  <img [src]="page.url" [alt]="page.title" class="stpf-slide-img" />
+                  <span class="stpf-page-number">{{ i + 1 }} / {{ innerSlidePages().length }}</span>
+                </div>
+              }
+              <div class="stpf-page stpf-back-cover" data-density="hard">
+                <img [src]="backCoverSlide().url" [alt]="backCoverSlide().title" class="stpf-cover-img stpf-back-cover-img" />
+              </div>
+            </div>
+            <div class="notebook-nav">
+              <button type="button" class="nav-arrow nav-prev" (click)="flipPageBackward()" aria-label="Previous page">‹</button>
+              <span class="nav-page-info">{{ currentPageIndex() + 1 }} / {{ slidePages().length }}</span>
+              <button type="button" class="nav-arrow nav-next" (click)="flipPageForward()" aria-label="Next page">›</button>
+            </div>
+            <button type="button" class="notebook-close-btn" (click)="closeNotebook()" aria-label="Close notebook">✕</button>
+          </div>
+        }
+      </aside>
+    }
+  </main>
+</div>

@@ -1,0 +1,50 @@
+﻿@inherits LayoutComponentBase
+@inject AuthService Auth
+@inject NavigationManager Navigation
+@using CmPlatform.Frontend.Services
+
+<MudThemeProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<MudLayout>
+    <MudDrawer Open="true" Variant="DrawerVariant.Responsive" ClipMode="DrawerClipMode.Always">
+        <MudDrawerHeader>
+            <MudText Typo="Typo.h6">CM Platform</MudText>
+        </MudDrawerHeader>
+        <NavMenu />
+        <MudDrawerHeader>
+            <MudButton Variant="Variant.Text" Color="Color.Error" FullWidth="true" OnClick="@LogoutAsync">Cerrar sesi&oacute;n</MudButton>
+        </MudDrawerHeader>
+    </MudDrawer>
+    <MudMainContent>
+        <MudAppBar>
+            <MudText Typo="Typo.h6" Class="ml-4">Community Manager</MudText>
+            <MudSpacer />
+            @if (Auth.IsLoggedIn)
+            {
+                <MudText Typo="Typo.body2">Conectado</MudText>
+            }
+        </MudAppBar>
+        <MudContainer Class="mt-4">
+            @Body
+        </MudContainer>
+    </MudMainContent>
+</MudLayout>
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        await Auth.InitAsync();
+        if (!Auth.IsLoggedIn && !Navigation.Uri.EndsWith("/login") && !Navigation.Uri.EndsWith("/register"))
+        {
+            Navigation.NavigateTo("/login", forceLoad: true);
+        }
+    }
+
+    private async Task LogoutAsync()
+    {
+        await Auth.LogoutAsync();
+        Navigation.NavigateTo("/login", forceLoad: true);
+    }
+}

@@ -1,0 +1,161 @@
+@page "/settings"
+@inject ApiClient Api
+@inject AuthService Auth
+@using System.Text.Json
+@using CmPlatform.Frontend.Services
+
+<MudText Typo="Typo.h4">Configuraci&oacute;n</MudText>
+<MudText Class="mb-4" Typo="Typo.body2">Perfil, suscripci&oacute;n y notificaciones</MudText>
+
+@if (loading)
+{
+    <MudProgressCircular Indeterminate="true" Class="ma-8" />
+}
+else
+{
+    <MudGrid>
+        <MudItem xs="12" md="6">
+            <MudCard Elevation="2" Class="mb-4">
+                <MudCardHeader>
+                    <MudCardHeaderContent>
+                        <MudText Typo="Typo.h6">Perfil del gestor</MudText>
+                    </MudCardHeaderContent>
+                </MudCardHeader>
+                <MudCardContent>
+                    <MudTextField @bind-Value="profile.Name" Label="Nombre" Required="true" />
+                    <MudTextField @bind-Value="profile.Email" Label="Email" Required="true" Disabled="true" />
+                    <MudTextField @bind-Value="profile.Phone" Label="Tel&eacute;fono" />
+                    <MudTextField @bind-Value="profile.Company" Label="Empresa" />
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="mt-4" OnClick="@SaveProfileAsync" Disabled="@saving">
+                        @(saving ? "Guardando..." : "Guardar cambios")
+                    </MudButton>
+                    @if (!string.IsNullOrEmpty(profileMsg))
+                    {
+                        <MudAlert Severity="@(profileError ? Severity.Error : Severity.Success)" Class="mt-2" Dense="true">
+                            @profileMsg
+                        </MudAlert>
+                    }
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+
+        <MudItem xs="12" md="6">
+            <MudCard Elevation="2" Class="mb-4">
+                <MudCardHeader>
+                    <MudCardHeaderContent>
+                        <MudText Typo="Typo.h6">Plan de suscripci&oacute;n</MudText>
+                    </MudCardHeaderContent>
+                </MudCardHeader>
+                <MudCardContent>
+                    <MudText Typo="Typo.body2">
+                        <strong>Plan actual:</strong>
+                        <MudBadge Color="@(plan == "active" ? Color.Success : Color.Warning)" Class="ml-2">
+                            @(plan ?? "sin plan")
+                        </MudBadge>
+                    </MudText>
+                    <MudText Typo="Typo.body2" Class="mt-4 mud-text-secondary">
+                        Pr&oacute;ximamente: cambio de plan, historial de pagos y facturaci&oacute;n autom&aacute;tica.
+                    </MudText>
+                    <MudButton Variant="Variant.Outlined" Color="Color.Primary" Class="mt-4" Disabled="true">
+                        Actualizar plan
+                    </MudButton>
+                </MudCardContent>
+            </MudCard>
+
+            <MudCard Elevation="2" Class="mb-4">
+                <MudCardHeader>
+                    <MudCardHeaderContent>
+                        <MudText Typo="Typo.h6">Notificaciones</MudText>
+                    </MudCardHeaderContent>
+                </MudCardHeader>
+                <MudCardContent>
+                    <MudText Typo="Typo.body2" Class="mud-text-secondary">
+                        Pr&oacute;ximamente: configuraci&oacute;n de notificaciones por email, Slack y webhook.
+                    </MudText>
+                    <MudSwitch @bind-Value="notifyEmail" Label="Notificaciones por email" Disabled="true" Class="mt-2" />
+                    <MudSwitch @bind-Value="notifyInApp" Label="Notificaciones in-app" Disabled="true" Class="mt-2" />
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+    </MudGrid>
+}
+
+@code {
+    private class ProfileInfo
+    {
+        public string? Id { get; set; }
+        public string? Name { get; set; }
+        public string? Email { get; set; }
+        public string? Phone { get; set; }
+        public string? Company { get; set; }
+    }
+
+    private ProfileInfo profile = new();
+    private string? plan;
+    private bool notifyEmail = true;
+    private bool notifyInApp = true;
+    private bool loading = true;
+    private bool saving;
+    private string? profileMsg;
+    private bool profileError;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadProfileAsync();
+    }
+
+    private async Task LoadProfileAsync()
+    {
+        loading = true;
+        try
+        {
+            var json = await Api.GetFromJsonAsync<JsonElement>("api/auth/me");
+            profile.Id = GetString(json, "id");
+            profile.Name = GetString(json, "name");
+            profile.Email = GetString(json, "email");
+            profile.Phone = GetString(json, "phone");
+            profile.Company = GetString(json, "company");
+            plan = GetString(json, "subscriptionStatus");
+        }
+        catch
+        {
+            profileMsg = "Error al cargar el perfil";
+            profileError = true;
+        }
+        finally
+        {
+            loading = false;
+        }
+    }
+
+    private async Task SaveProfileAsync()
+    {
+        saving = true;
+        profileMsg = null;
+        profileError = false;
+
+        try
+        {
+            await Api.PutAsJsonAsync($"api/clients/{profile.Id}", new
+            {
+                name = profile.Name,
+                phone = profile.Phone,
+                company = profile.Company,
+            });
+
+            profileMsg = "Perfil actualizado correctamente";
+        }
+        catch
+        {
+            profileMsg = "Error al guardar el perfil";
+            profileError = true;
+        }
+        finally
+        {
+            saving = false;
+        }
+    }
+
+    private static string GetString(JsonElement el, string prop) =>
+        el.TryGetProperty(prop, out var p) ? p.GetString() ?? "" : "";
+}

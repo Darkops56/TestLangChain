@@ -1,0 +1,99 @@
+services:
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+      - agent_media:/srv/agent-media:ro
+    depends_on:
+      - frontend
+      - backend
+      - agent
+
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: novit
+      POSTGRES_USER: novit
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-novit_dev_password}
+      POSTGRES_MULTIPLE_DATABASES: calcom
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./init-multiple-dbs.sh:/docker-entrypoint-initdb.d/init-multiple-dbs.sh:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U novit -d novit"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
+      start_period: 5s
+
+  backend:
+    build:
+      context: .
+      dockerfile: src/backend/Dockerfile
+    restart: unless-stopped
+    expose:
+      - "5000"
+    env_file:
+      - .env
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - AdminApiKey=${ADMIN_API_KEY}
+      - AdminApiAllowedIps=${ADMIN_API_ALLOWED_IPS:-}
+      - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Database=novit;Username=novit;Password=${POSTGRES_PASSWORD:-novit_dev_password}
+    depends_on:
+      db:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: .
+      dockerfile: src/frontend/Dockerfile
+    expose:
+      - "4000"
+    depends_on:
+      - backend
+
+  # --------------- AI Agent (Python / LangGraph) --------
+  agent:
+    build:
+      context: .
+      dockerfile: src/agent/Dockerfile
+    restart: unless-stopped
+    expose:
+      - "8000"
+    env_file:
+      - .env
+    environment:
+      - DOTNET_BASE_URL=http://backend:5000
+    depends_on:
+      db:
+        condition: service_healthy
+      backend:
+        condition: service_started
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    volumes:
+      - agent_media:/app/media
+      - ./.tmp:/app/.tmp:ro
+      - ${CM_TRAINING_MEDIA_SOURCE:-./media/training}:/app/training-media:ro
+      - ./secrets:/app/secrets:ro
+
+volumes:
+  pgdata:
+  caddy_data:
+  caddy_config:
+  agent_media:

@@ -1,0 +1,264 @@
+@page "/timeline"
+@inject ApiClient Api
+@inject NotificationService Notification
+@using System.Text.Json
+@using CmPlatform.Frontend.Services
+
+<MudText Typo="Typo.h4">Timeline de Publicaciones</MudText>
+<MudText Class="mb-4" Typo="Typo.body2">Calendario y estado de todas las publicaciones</MudText>
+
+<MudToolBar Class="mb-4">
+    <MudDatePicker @bind-Date="filterDate" Label="Filtrar por fecha" AutoClose="true" />
+    <MudSelect @bind-Value="filterStatus" Label="Estado" Clearable="true" Dense="true">
+        <MudSelectItem Value="@("draft")">Borrador</MudSelectItem>
+        <MudSelectItem Value="@("scheduled")">Programado</MudSelectItem>
+        <MudSelectItem Value="@("published")">Publicado</MudSelectItem>
+    </MudSelect>
+    <MudIconButton Icon="@(showTimeline ? Icons.Material.Filled.TableRows : Icons.Material.Filled.Timeline)" OnClick="@(() => showTimeline = !showTimeline)" />
+</MudToolBar>
+
+@if (showTimeline)
+{
+    <MudExpansionPanels MultiExpansion="true">
+        @foreach (var group in grouped)
+        {
+            <MudExpansionPanel Title="@group.Key">
+                <PanelContent>
+                    @foreach (var pub in group.Value)
+                    {
+                        <MudCard Elevation="1" Class="mb-2 mud-info-text" Style="@($"border-left: 4px solid {GetBorderColor(GetString(pub, "status"))}")">
+                            <MudCardContent Class="py-2">
+                                <MudGrid>
+                                    <MudItem xs="12" sm="3">
+                                        <MudText Typo="Typo.body2" Class="mud-text-secondary">
+                                            @FormatDate(pub, "scheduledAt")
+                                        </MudText>
+                                    </MudItem>
+                                    <MudItem xs="12" sm="3">
+                                        <MudText Typo="Typo.body2">
+                                            <strong>@GetString(pub, "platform")</strong>
+                                        </MudText>
+                                        <MudText Typo="Typo.caption">@GetString(pub, "contentType")</MudText>
+                                    </MudItem>
+                                    <MudItem xs="12" sm="3">
+                                        <MudText Typo="Typo.body2">@GetString(pub, "clientName")</MudText>
+                                    </MudItem>
+                                    <MudItem xs="12" sm="3" Class="d-flex align-center">
+                                        <MudBadge Color="@GetStatusColor(GetString(pub, "status"))">
+                                            @GetString(pub, "status")
+                                        </MudBadge>
+                                    </MudItem>
+                                    <MudItem xs="12" sm="3" Class="d-flex align-center gap-2">
+                                        @if (GetString(pub, "status") is "draft" or "scheduled")
+                                        {
+                                            <MudIconButton Icon="@Icons.Material.Filled.CheckCircle" Color="Color.Success" Size="Size.Small" Title="Aprobar" OnClick="@(() => ApprovePub(GetString(pub, "id")))" />
+                                            <MudIconButton Icon="@Icons.Material.Filled.Cancel" Color="Color.Error" Size="Size.Small" Title="Rechazar" OnClick="@(() => RejectPub(GetString(pub, "id")))" />
+                                        }
+                                        @if (GetString(pub, "status") == "draft")
+                                        {
+                                            <MudIconButton Icon="@Icons.Material.Filled.Schedule" Color="Color.Info" Size="Size.Small" Title="Programar" OnClick="@(() => SchedulePub(GetString(pub, "id")))" />
+                                        }
+                                    </MudItem>
+                                </MudGrid>
+                                @if (!string.IsNullOrWhiteSpace(GetString(pub, "content")))
+                                {
+                                    <MudExpansionPanel Title="Ver contenido" Class="mt-2">
+                                        <PanelContent>
+                                            <MudText Typo="Typo.body2">@GetString(pub, "content")</MudText>
+                                        </PanelContent>
+                                    </MudExpansionPanel>
+                                }
+                            </MudCardContent>
+                        </MudCard>
+                    }
+                </PanelContent>
+            </MudExpansionPanel>
+        }
+        @if (grouped.Count == 0 && !loading)
+        {
+            <MudText Typo="Typo.body2" Class="mud-text-secondary pa-4">No hay publicaciones para los filtros seleccionados</MudText>
+        }
+    </MudExpansionPanels>
+}
+else
+{
+    <MudTable Items="@filtered" Dense="true" Hover="true" Breakpoint="Breakpoint.Sm">
+        <HeaderContent>
+            <MudTh>Cliente</MudTh>
+            <MudTh>Plataforma</MudTh>
+            <MudTh>Tipo</MudTh>
+            <MudTh>Estado</MudTh>
+            <MudTh>Programado</MudTh>
+            <MudTh>Publicado</MudTh>
+            <MudTh>Acciones</MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="Cliente">@GetString(context, "clientName")</MudTd>
+            <MudTd DataLabel="Plataforma">@GetString(context, "platform")</MudTd>
+            <MudTd DataLabel="Tipo">@GetString(context, "contentType")</MudTd>
+            <MudTd DataLabel="Estado">
+                <MudBadge Color="@GetStatusColor(GetString(context, "status"))">@GetString(context, "status")</MudBadge>
+            </MudTd>
+            <MudTd DataLabel="Programado">@FormatDate(context, "scheduledAt")</MudTd>
+            <MudTd DataLabel="Publicado">@FormatDate(context, "publishedAt")</MudTd>
+            <MudTd DataLabel="Acciones">
+                @if (GetString(context, "status") is "draft" or "scheduled")
+                {
+                    <MudIconButton Icon="@Icons.Material.Filled.CheckCircle" Color="Color.Success" Size="Size.Small" Title="Aprobar" OnClick="@(() => ApprovePub(GetString(context, "id")))" />
+                    <MudIconButton Icon="@Icons.Material.Filled.Cancel" Color="Color.Error" Size="Size.Small" Title="Rechazar" OnClick="@(() => RejectPub(GetString(context, "id")))" />
+                }
+                @if (GetString(context, "status") == "draft")
+                {
+                    <MudIconButton Icon="@Icons.Material.Filled.Schedule" Color="Color.Info" Size="Size.Small" Title="Programar" OnClick="@(() => SchedulePub(GetString(context, "id")))" />
+                }
+            </MudTd>
+        </RowTemplate>
+    </MudTable>
+}
+
+@if (loading)
+{
+    <MudProgressCircular Indeterminate="true" Class="ma-4" />
+}
+
+@code {
+    [SupplyParameterFromQuery] public Guid? clientId { get; set; }
+    [SupplyParameterFromQuery] public string? from { get; set; }
+    [SupplyParameterFromQuery] public string? to { get; set; }
+
+    private List<JsonElement> publications = [];
+    private DateTime? filterDate;
+    private string? filterStatus;
+    private bool showTimeline = true;
+    private bool loading;
+
+    private List<JsonElement> filtered
+    {
+        get
+        {
+            var q = publications.AsEnumerable();
+
+            if (filterDate.HasValue)
+                q = q.Where(p => ParseDate(p, "scheduledAt")?.Date == filterDate.Value.Date
+                    || ParseDate(p, "publishedAt")?.Date == filterDate.Value.Date);
+
+            if (!string.IsNullOrWhiteSpace(filterStatus))
+                q = q.Where(p => GetString(p, "status") == filterStatus);
+
+            if (clientId.HasValue)
+                q = q.Where(p =>
+                {
+                    if (!p.TryGetProperty("clientId", out var cid)) return false;
+                    return Guid.TryParse(cid.GetString(), out var guid) && guid == clientId.Value;
+                });
+
+            return q.OrderByDescending(p => ParseDate(p, "scheduledAt") ?? DateTimeOffset.MinValue).ToList();
+        }
+    }
+
+    private Dictionary<string, List<JsonElement>> grouped
+    {
+        get
+        {
+            var groups = new Dictionary<string, List<JsonElement>>();
+            foreach (var pub in filtered)
+            {
+                var dt = ParseDate(pub, "scheduledAt") ?? ParseDate(pub, "publishedAt") ?? DateTimeOffset.Now;
+                var key = dt.ToLocalTime().ToString("MMMM yyyy");
+                if (!groups.ContainsKey(key))
+                    groups[key] = [];
+                groups[key].Add(pub);
+            }
+            return groups;
+        }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Notification.OnPublicationStatusChanged += _ => InvokeAsync(LoadPublications);
+        _ = ConnectSignalR();
+        await LoadPublications();
+    }
+
+    private async Task ConnectSignalR()
+    {
+        try
+        {
+            var token = Api.GetToken();
+            if (string.IsNullOrEmpty(token)) return;
+            await Notification.ConnectAsync("http://localhost:5000/hubs/notifications", token);
+        }
+        catch { }
+    }
+
+    private async Task LoadPublications()
+    {
+        loading = true;
+        try
+        {
+            var url = "api/publications";
+            if (clientId.HasValue)
+                url += $"?clientId={clientId.Value}";
+
+            var arr = await Api.GetFromJsonAsync<JsonElement[]>(url);
+            publications = arr?.ToList() ?? [];
+        }
+        catch { }
+        finally
+        {
+            loading = false;
+        }
+    }
+
+    private static DateTimeOffset? ParseDate(JsonElement el, string prop)
+    {
+        if (!el.TryGetProperty(prop, out var p) || p.ValueKind != JsonValueKind.String)
+            return null;
+        if (DateTimeOffset.TryParse(p.GetString(), out var dt))
+            return dt;
+        return null;
+    }
+
+    private static string FormatDate(JsonElement el, string prop)
+    {
+        var dt = ParseDate(el, prop);
+        return dt?.ToLocalTime().ToString("g") ?? "-";
+    }
+
+    private static Color GetStatusColor(string status) => status switch
+    {
+        "published" => Color.Success,
+        "draft" => Color.Default,
+        "scheduled" => Color.Info,
+        _ => Color.Warning
+    };
+
+    private async Task ApprovePub(string id)
+    {
+        await Api.PutAsJsonAsync($"api/publications/{id}/status", new { status = "published" });
+        await LoadPublications();
+    }
+
+    private async Task RejectPub(string id)
+    {
+        await Api.PutAsJsonAsync($"api/publications/{id}/status", new { status = "rejected" });
+        await LoadPublications();
+    }
+
+    private async Task SchedulePub(string id)
+    {
+        await Api.PutAsJsonAsync($"api/publications/{id}/status", new { status = "scheduled", scheduledAt = DateTimeOffset.UtcNow.AddDays(1) });
+        await LoadPublications();
+    }
+
+    private static string GetBorderColor(string status) => status switch
+    {
+        "published" => "#4caf50",
+        "draft" => "#9e9e9e",
+        "scheduled" => "#2196f3",
+        _ => "#ff9800"
+    };
+
+    private static string GetString(JsonElement el, string prop) =>
+        el.TryGetProperty(prop, out var p) ? p.GetString() ?? "" : "";
+}

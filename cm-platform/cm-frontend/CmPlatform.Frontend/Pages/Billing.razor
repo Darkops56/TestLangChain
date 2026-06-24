@@ -1,0 +1,68 @@
+@page "/billing"
+@inject ApiClient Api
+@using System.Text.Json
+@using CmPlatform.Frontend.Services
+
+<MudText Typo="Typo.h4">Facturaci&oacute;n</MudText>
+<MudText Class="mb-4" Typo="Typo.body2">Gesti&oacute;n de facturas y pagos</MudText>
+
+<MudTable Items="@invoices" Dense="true" Hover="true" Breakpoint="Breakpoint.Sm">
+    <HeaderContent>
+        <MudTh>Cliente</MudTh>
+        <MudTh>Monto</MudTh>
+        <MudTh>Estado</MudTh>
+        <MudTh>Vencimiento</MudTh>
+        <MudTh>Pagado</MudTh>
+        <MudTh>Acciones</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Cliente">@GetString(context, "clientName")</MudTd>
+        <MudTd DataLabel="Monto">@GetString(context, "currency") @GetDecimal(context, "amount")</MudTd>
+        <MudTd DataLabel="Estado">
+            <MudBadge Color="@(GetString(context, "status") == "paid" ? Color.Success : Color.Warning)">
+                @GetString(context, "status")
+            </MudBadge>
+        </MudTd>
+        <MudTd DataLabel="Vencimiento">@GetString(context, "dueAt")</MudTd>
+        <MudTd DataLabel="Pagado">@GetString(context, "paidAt")</MudTd>
+        <MudTd DataLabel="Acciones">
+            @if (GetString(context, "status") == "pending")
+            {
+                <MudButton Size="Size.Small" Variant="Variant.Outlined" Color="Color.Success" OnClick="@(() => MarkPaid(GetString(context, "id")))">
+                    Marcar pagado
+                </MudButton>
+            }
+        </MudTd>
+    </RowTemplate>
+</MudTable>
+
+@code {
+    private List<JsonElement> invoices = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadInvoices();
+    }
+
+    private async Task LoadInvoices()
+    {
+        try
+        {
+            var arr = await Api.GetFromJsonAsync<JsonElement[]>("api/billing/invoices");
+            invoices = arr?.ToList() ?? [];
+        }
+        catch { }
+    }
+
+    private async Task MarkPaid(string id)
+    {
+        await Api.PostAsync($"api/billing/invoices/{id}/pay", null);
+        await LoadInvoices();
+    }
+
+    private static string GetString(JsonElement el, string prop) =>
+        el.TryGetProperty(prop, out var p) ? p.GetString() ?? "" : "";
+
+    private static decimal GetDecimal(JsonElement el, string prop) =>
+        el.TryGetProperty(prop, out var p) && p.TryGetDecimal(out var v) ? v : 0;
+}

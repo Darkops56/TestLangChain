@@ -1,0 +1,162 @@
+@page "/clients/new"
+@page "/clients/{Id:guid}/edit"
+@inject ApiClient Api
+@inject NavigationManager Nav
+@using System.Text.Json
+@using CmPlatform.Frontend.Services
+@using CmPlatform.Frontend.Models
+
+<MudText Typo=" Typo.h5" Class="mb-4">
+    <MudIconButton Icon="@Icons.Material.Filled.ArrowBack" OnClick="@GoBack" />
+    @(Id.HasValue ? "Editar cliente" : "Nuevo cliente")
+</MudText>
+
+@if (loading)
+{
+    <MudProgressCircular Indeterminate="true" Class="ma-8" />
+}
+else
+{
+    <MudPaper Elevation="2" Class="pa-8" MaxWidth="600px">
+        <EditForm Model="@model" OnValidSubmit="@HandleSubmit" FormName="clientForm">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <MudTextField @bind-Value="model.Name"
+                          Label="Nombre"
+                          Required="true"
+                          For="@(() => model.Name)" />
+
+            @if (!Id.HasValue)
+            {
+                <MudTextField @bind-Value="model.Email"
+                              Label="Email"
+                              Required="true"
+                              For="@(() => model.Email)" />
+            }
+            else
+            {
+                <MudTextField @bind-Value="model.Email"
+                              Label="Email"
+                              Required="true"
+                              Disabled="true"
+                              For="@(() => model.Email)" />
+            }
+
+            <MudTextField @bind-Value="model.Phone"
+                          Label="Tel&eacute;fono"
+                          For="@(() => model.Phone)" />
+
+            <MudTextField @bind-Value="model.Company"
+                          Label="Empresa"
+                          For="@(() => model.Company)" />
+
+            <MudTextField @bind-Value="model.Notes"
+                          Label="Notas"
+                          Lines="3"
+                          For="@(() => model.Notes)" />
+
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="mt-4" Disabled="@submitting" Type="Submit">
+                @(submitting ? "Guardando..." : "Guardar")
+            </MudButton>
+            <MudButton Variant="Variant.Text" Class="mt-4 ml-2" OnClick="@GoBack">Cancelar</MudButton>
+        </EditForm>
+    </MudPaper>
+}
+
+@if (!string.IsNullOrEmpty(error))
+{
+    <MudAlert Severity="Severity.Error" Class="mt-4">@error</MudAlert>
+}
+
+@code {
+    [Parameter] public Guid? Id { get; set; }
+
+    private ClientFormModel model = new();
+    private bool loading;
+    private bool submitting;
+    private string? error;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (Id.HasValue)
+            await LoadClientAsync();
+    }
+
+    private void GoBack()
+    {
+        Nav.NavigateTo("/clients");
+    }
+
+    private async Task LoadClientAsync()
+    {
+        loading = true;
+        try
+        {
+            var json = await Api.GetFromJsonAsync<JsonElement>($"api/clients/{Id!.Value}");
+            model.Id = Id.Value;
+            model.Name = GetString(json, "name");
+            model.Email = GetString(json, "email");
+            model.Phone = GetString(json, "phone");
+            model.Company = GetString(json, "company");
+            model.Notes = GetString(json, "notes");
+        }
+        catch
+        {
+            error = "Error al cargar los datos del cliente";
+        }
+        finally
+        {
+            loading = false;
+        }
+    }
+
+    private async Task HandleSubmit()
+    {
+        submitting = true;
+        error = null;
+
+        try
+        {
+            if (Id.HasValue)
+            {
+                await Api.PutAsJsonAsync($"api/clients/{Id.Value}", new
+                {
+                    name = model.Name,
+                    phone = model.Phone,
+                    company = model.Company,
+                    notes = model.Notes,
+                });
+            }
+            else
+            {
+                var response = await Api.PostAsJsonAsync("api/clients/register", new
+                {
+                    name = model.Name,
+                    email = model.Email,
+                    phone = model.Phone,
+                    company = model.Company,
+                });
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    error = "El email ya est&aacute; registrado";
+                    return;
+                }
+            }
+
+            Nav.NavigateTo("/clients");
+        }
+        catch (Exception ex)
+        {
+            error = $"Error de conexi&oacute;n: {ex.Message}";
+        }
+        finally
+        {
+            submitting = false;
+        }
+    }
+
+    private static string GetString(JsonElement el, string prop) =>
+        el.TryGetProperty(prop, out var p) ? p.GetString() ?? "" : "";
+}

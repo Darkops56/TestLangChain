@@ -1,0 +1,80 @@
+@page "/register"
+@inject ApiClient Api
+@inject AuthService Auth
+@inject NavigationManager Navigation
+@using CmPlatform.Frontend.Services
+
+<MudContainer MaxWidth="MaxWidth.Small" Class="mt-16">
+    <MudPaper Class="pa-8" Elevation="4">
+        <MudText Typo="Typo.h4" Align="Align.Center" Class="mb-4">Crear cuenta</MudText>
+
+        <MudTextField @bind-Value="name" Label="Nombre" Required="true" Immediate="true" />
+        <MudTextField @bind-Value="email" Label="Email" Required="true" Immediate="true" />
+        <MudTextField @bind-Value="phone" Label="Tel&eacute;fono" />
+        <MudTextField @bind-Value="company" Label="Empresa" />
+
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" FullWidth="true" Class="mt-4" OnClick="@RegisterAsync" Disabled="@loading">
+            @(loading ? "Creando..." : "Crear cuenta")
+        </MudButton>
+
+        @if (!string.IsNullOrEmpty(error))
+        {
+            <MudAlert Severity="Severity.Error" Class="mt-4">@error</MudAlert>
+        }
+
+        <MudText Typo="Typo.body2" Align="Align.Center" Class="mt-4">
+            <a href="/login">Ya tengo cuenta</a>
+        </MudText>
+    </MudPaper>
+</MudContainer>
+
+@code {
+    private string name = "";
+    private string email = "";
+    private string? phone;
+    private string? company;
+    private string error = "";
+    private bool loading;
+
+    private async Task RegisterAsync()
+    {
+        if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(email))
+        {
+            error = "Nombre y email son requeridos";
+            return;
+        }
+
+        loading = true;
+        error = "";
+
+        try
+        {
+            var response = await Api.PostAsJsonAsync("api/clients/register", new { name, email, phone, company });
+            if (!response.IsSuccessStatusCode)
+            {
+                error = "El email ya est&aacute; registrado";
+                return;
+            }
+
+            var result = await response.Content.ReadFromJsonAsync<RegisterResponse>();
+            if (result?.token is not null)
+            {
+                await Auth.SetTokenAsync(result.token);
+                Navigation.NavigateTo("/");
+            }
+        }
+        catch (Exception ex)
+        {
+            error = $"Error de conexi&oacute;n: {ex.Message}";
+        }
+        finally
+        {
+            loading = false;
+        }
+    }
+
+    private class RegisterResponse
+    {
+        public string? token { get; set; }
+    }
+}

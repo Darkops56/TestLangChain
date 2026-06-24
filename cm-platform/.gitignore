@@ -1,0 +1,9 @@
+bin/
+obj/
+node_modules/
+.env
+*.key
+*.pem
+media/
+__pycache__/
+*.pyc

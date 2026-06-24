@@ -1,0 +1,317 @@
+@page "/clients/{Id:guid}"
+@inject ApiClient Api
+@inject NavigationManager Nav
+@using System.Text.Json
+@using CmPlatform.Frontend.Services
+
+<MudText Typo="Typo.h5" Class="mb-4">
+    <MudIconButton Icon="@Icons.Material.Filled.ArrowBack" OnClick="@GoBack" />
+    Detalle del cliente
+</MudText>
+
+@if (loading)
+{
+    <MudProgressCircular Indeterminate="true" Class="ma-8" />
+}
+else if (client is null)
+{
+    <MudAlert Severity="Severity.Warning">Cliente no encontrado</MudAlert>
+}
+else
+{
+    var c = client.Value;
+    <MudGrid>
+        <MudItem xs="12" md="4">
+            <MudCard Elevation="2" Class="mb-4">
+                <MudCardHeader>
+                    <MudCardHeaderContent>
+                        <MudText Typo="Typo.h6">@c.GetProperty("name").GetString()</MudText>
+                        <MudText Typo="Typo.body2" Class="mud-text-secondary">@c.GetProperty("email").GetString()</MudText>
+                    </MudCardHeaderContent>
+                </MudCardHeader>
+                <MudCardContent>
+                    <MudText Typo="Typo.body2">
+                        <strong>Tel&eacute;fono:</strong> @GetStringProp(c, "phone")<br />
+                        <strong>Empresa:</strong> @GetStringProp(c, "company")<br />
+                        <strong>Plan:</strong> @GetStringProp(c, "subscriptionStatus")<br />
+                        <strong>Registrado:</strong> @FormatDate(c, "createdAt")
+                    </MudText>
+                    @if (TryGetString(c, "notes", out var notes))
+                    {
+                        <MudText Typo="Typo.body2" Class="mt-2"><strong>Notas:</strong><br />@notes</MudText>
+                    }
+                </MudCardContent>
+                <MudCardActions>
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@(() => Nav.NavigateTo($"/clients/{Id}/edit"))">Editar</MudButton>
+                </MudCardActions>
+            </MudCard>
+
+            <MudCard Elevation="2" Class="mb-4">
+                <MudCardHeader>
+                    <MudCardHeaderContent>
+                        <MudText Typo="Typo.h6">Redes Sociales</MudText>
+                    </MudCardHeaderContent>
+                    <MudCardHeaderActions>
+                        <MudIconButton Icon="@Icons.Material.Filled.Add" OnClick="@(() => showAddSocial = true)" />
+                    </MudCardHeaderActions>
+                </MudCardHeader>
+                <MudCardContent>
+                    @if (socialAccounts is null || socialAccounts.Length == 0)
+                    {
+                        <MudText Typo="Typo.body2" Class="mud-text-secondary">Sin redes vinculadas</MudText>
+                    }
+                    else
+                    {
+                        <MudTable Items="@socialAccounts" Hover="true" Dense="true">
+                            <HeaderContent>
+                                <MudTh>Plataforma</MudTh>
+                                <MudTh>Usuario</MudTh>
+                                <MudTh>Estado</MudTh>
+                            </HeaderContent>
+                            <RowTemplate>
+                                <MudTd>@GetStringProp(context, "platform")</MudTd>
+                                <MudTd>@GetStringProp(context, "username")</MudTd>
+                                <MudTd>
+                                    @if (context.TryGetProperty("isActive", out var act) && act.GetBoolean())
+                                    {
+                                        <MudBadge Color="Color.Success">Activa</MudBadge>
+                                    }
+                                    else
+                                    {
+                                        <MudBadge Color="Color.Default">Inactiva</MudBadge>
+                                    }
+                                </MudTd>
+                            </RowTemplate>
+                        </MudTable>
+                    }
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+
+        <MudItem xs="12" md="8">
+            <MudCard Elevation="2" Class="mb-4">
+                <MudCardHeader>
+                    <MudCardHeaderContent>
+                        <MudText Typo="Typo.h6">Publicaciones</MudText>
+                    </MudCardHeaderContent>
+                    <MudCardHeaderActions>
+                        <MudIconButton Icon="@Icons.Material.Filled.Add" OnClick="@(() => Nav.NavigateTo($"/timeline?clientId={Id}"))" />
+                    </MudCardHeaderActions>
+                </MudCardHeader>
+                <MudCardContent>
+                    @if (publications is null || publications.Length == 0)
+                    {
+                        <MudText Typo="Typo.body2" Class="mud-text-secondary">Sin publicaciones</MudText>
+                    }
+                    else
+                    {
+                        <MudTable Items="@publications" Hover="true" Dense="true">
+                            <HeaderContent>
+                                <MudTh>Fecha</MudTh>
+                                <MudTh>Plataforma</MudTh>
+                                <MudTh>Tipo</MudTh>
+                                <MudTh>Estado</MudTh>
+                                <MudTh>Acciones</MudTh>
+                            </HeaderContent>
+                            <RowTemplate>
+                                <MudTd>@FormatDate(context, "scheduledAt")</MudTd>
+                                <MudTd>@GetStringProp(context, "platform")</MudTd>
+                                <MudTd>@GetStringProp(context, "contentType")</MudTd>
+                                <MudTd>
+                                    <MudBadge Color="@GetStatusColor(GetStringProp(context, "status"))">
+                                        @GetStringProp(context, "status")
+                                    </MudBadge>
+                                </MudTd>
+                                <MudTd>
+                                    @if (GetStringProp(context, "status") is "draft" or "scheduled")
+                                    {
+                                        <MudIconButton Icon="@Icons.Material.Filled.CheckCircle" Color="Color.Success" Size="Size.Small" Title="Aprobar" OnClick="@(() => ApprovePub(GetStringProp(context, "id")))" />
+                                        <MudIconButton Icon="@Icons.Material.Filled.Cancel" Color="Color.Error" Size="Size.Small" Title="Rechazar" OnClick="@(() => RejectPub(GetStringProp(context, "id")))" />
+                                    }
+                                    @if (GetStringProp(context, "status") == "draft")
+                                    {
+                                        <MudIconButton Icon="@Icons.Material.Filled.Schedule" Color="Color.Info" Size="Size.Small" Title="Programar" OnClick="@(() => SchedulePub(GetStringProp(context, "id")))" />
+                                    }
+                                </MudTd>
+                            </RowTemplate>
+                        </MudTable>
+                    }
+                </MudCardContent>
+            </MudCard>
+
+            <MudCard Elevation="2" Class="mb-4">
+                <MudCardHeader>
+                    <MudCardHeaderContent>
+                        <MudText Typo="Typo.h6">Facturas</MudText>
+                    </MudCardHeaderContent>
+                    <MudCardHeaderActions>
+                        <MudIconButton Icon="@Icons.Material.Filled.Add" OnClick="@(() => Nav.NavigateTo($"/billing?clientId={Id}"))" />
+                    </MudCardHeaderActions>
+                </MudCardHeader>
+                <MudCardContent>
+                    @if (invoices is null || invoices.Length == 0)
+                    {
+                        <MudText Typo="Typo.body2" Class="mud-text-secondary">Sin facturas</MudText>
+                    }
+                    else
+                    {
+                        <MudTable Items="@invoices" Hover="true" Dense="true">
+                            <HeaderContent>
+                                <MudTh>Monto</MudTh>
+                                <MudTh>Vence</MudTh>
+                                <MudTh>Estado</MudTh>
+                            </HeaderContent>
+                            <RowTemplate>
+                                <MudTd>@GetStringProp(context, "currency") @context.GetProperty("amount").GetDecimal()</MudTd>
+                                <MudTd>@FormatDate(context, "dueAt")</MudTd>
+                                <MudTd>
+                                    <MudBadge Color="@GetStatusColor(GetStringProp(context, "status"))">
+                                        @GetStringProp(context, "status")
+                                    </MudBadge>
+                                </MudTd>
+                            </RowTemplate>
+                        </MudTable>
+                    }
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+    </MudGrid>
+}
+
+<MudDialog @bind-Visible="showAddSocial">
+    <DialogContent>
+        <MudSelect T="string" @bind-Value="newSocialPlatform" Label="Plataforma" Required="true">
+            <MudSelectItem T="string" Value="@("Instagram")">Instagram</MudSelectItem>
+            <MudSelectItem T="string" Value="@("Facebook")">Facebook</MudSelectItem>
+            <MudSelectItem T="string" Value="@("Twitter")">Twitter / X</MudSelectItem>
+            <MudSelectItem T="string" Value="@("LinkedIn")">LinkedIn</MudSelectItem>
+            <MudSelectItem T="string" Value="@("TikTok")">TikTok</MudSelectItem>
+        </MudSelect>
+        <MudTextField @bind-Value="newSocialUsername" Label="Usuario / URL" Required="true" />
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@(() => showAddSocial = false)">Cancelar</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@AddSocialAccountAsync">Agregar</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [Parameter] public Guid Id { get; set; }
+
+    private bool loading = true;
+    private JsonElement? client;
+    private JsonElement[]? socialAccounts;
+    private JsonElement[]? publications;
+    private JsonElement[]? invoices;
+
+    private bool showAddSocial;
+    private string? newSocialPlatform;
+    private string? newSocialUsername;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadDataAsync();
+    }
+
+    private void GoBack()
+    {
+        Nav.NavigateTo("/clients");
+    }
+
+    private async Task LoadDataAsync()
+    {
+        loading = true;
+        try
+        {
+            var tasks = new[]
+            {
+                Task.Run(async () => client = await Api.GetFromJsonAsync<JsonElement>($"api/clients/{Id}")),
+                Task.Run(async () =>
+                {
+                    var arr = await Api.GetFromJsonAsync<JsonElement[]>($"api/clients/{Id}/social-accounts");
+                    socialAccounts = arr ?? [];
+                }),
+                Task.Run(async () =>
+                {
+                    var arr = await Api.GetFromJsonAsync<JsonElement[]>($"api/publications?clientId={Id}");
+                    publications = arr ?? [];
+                }),
+                Task.Run(async () =>
+                {
+                    var arr = await Api.GetFromJsonAsync<JsonElement[]>($"api/billing/invoices?clientId={Id}");
+                    invoices = arr ?? [];
+                }),
+            };
+            await Task.WhenAll(tasks);
+        }
+        catch
+        {
+            client = null;
+        }
+        finally
+        {
+            loading = false;
+        }
+    }
+
+    private async Task AddSocialAccountAsync()
+    {
+        if (string.IsNullOrWhiteSpace(newSocialPlatform) || string.IsNullOrWhiteSpace(newSocialUsername))
+            return;
+
+        await Api.PostAsJsonAsync($"api/clients/{Id}/social-accounts", new
+        {
+            platform = newSocialPlatform,
+            username = newSocialUsername,
+        });
+        showAddSocial = false;
+        newSocialPlatform = null;
+        newSocialUsername = null;
+        await LoadDataAsync();
+    }
+
+    private async Task ApprovePub(string id)
+    {
+        await Api.PutAsJsonAsync($"api/publications/{id}/status", new { status = "published" });
+        await LoadDataAsync();
+    }
+
+    private async Task RejectPub(string id)
+    {
+        await Api.PutAsJsonAsync($"api/publications/{id}/status", new { status = "rejected" });
+        await LoadDataAsync();
+    }
+
+    private async Task SchedulePub(string id)
+    {
+        await Api.PutAsJsonAsync($"api/publications/{id}/status", new { status = "scheduled", scheduledAt = DateTimeOffset.UtcNow.AddDays(1) });
+        await LoadDataAsync();
+    }
+
+    private static Color GetStatusColor(string? status) => status switch
+    {
+        "published" or "paid" => Color.Success,
+        "draft" or "pending" => Color.Warning,
+        "cancelled" or "overdue" => Color.Error,
+        _ => Color.Default,
+    };
+
+    private static string GetStringProp(JsonElement el, string name) =>
+        el.TryGetProperty(name, out var prop) ? prop.GetString() ?? "" : "";
+
+    private static bool TryGetString(JsonElement el, string name, out string value)
+    {
+        if (el.TryGetProperty(name, out var prop) && prop.ValueKind == JsonValueKind.String)
+        {
+            value = prop.GetString() ?? "";
+            return true;
+        }
+        value = "";
+        return false;
+    }
+
+    private static string FormatDate(JsonElement el, string name) =>
+        el.TryGetProperty(name, out var prop) && prop.TryGetDateTimeOffset(out var dt)
+            ? dt.ToLocalTime().ToString("g")
+            : "-";
+}

@@ -1,0 +1,46 @@
+# Multi-domain support — Caddy auto-provisions Let's Encrypt certs for all
+ai.novit.com.ar, ia.novit.com.ar, ai.novitsoftware.com, ia.novitsoftware.com {
+	# Public generated media for Meta fetches
+	handle_path /generated-media/* {
+		root * /srv/agent-media
+		file_server
+	}
+
+	# Internal-only backend routes must stay off the public edge.
+	handle /api/internal/* {
+		respond "Not found" 404
+	}
+
+	# Newsletter review links (served by agent, not backend)
+	handle /api/nurturing/review/* {
+		reverse_proxy agent:8000
+	}
+
+	# Backend API
+	handle /api/* {
+		reverse_proxy backend:5000
+	}
+
+	# SignalR hubs
+	handle /hubs/* {
+		reverse_proxy backend:5000
+	}
+
+	# Everything else → Angular SSR frontend
+	handle {
+		reverse_proxy frontend:4000
+	}
+}
+
+# Odoo 18 ERP — instancia separada con su propio docker compose project
+erp.novit.com.ar {
+	reverse_proxy odoo18_web:8069
+
+	@websockets {
+		path /websocket
+		path /longpolling/*
+	}
+	handle @websockets {
+		reverse_proxy odoo18_web:8072
+	}
+}

@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Novit AI Agent</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="nav">
+    <div class="brand"><span class="logo">N</span><span>novit</span></div>
+    <nav><a href="#">Services</a><a href="#">Experience</a><a href="#">Academy</a><a href="#">QA Testing</a></nav>
+    <span class="status">● Online · AI Ready</span>
+  </header>
+
+  <main class="container">
+    <h1 class="sr-only">Novit AI Agent</h1>
+    <section id="chat" class="chat" aria-live="polite">
+      <article class="bubble"><p>¡Hola! 👋 Soy la IA de Novit. Te muestro rápido cómo podemos ayudarte.</p></article>
+      <article class="bubble"><p>¿Qué hacemos en Novit? Desarrollo de software, consultoría IT, QA, UX/UI, Data Science e IA.</p>
+        <ul class="grid services">
+          <li>Software Development</li><li>IT Consulting</li><li>QA & Testing</li><li>UX/UI Design</li><li>Data Science</li><li>Artificial Intelligence</li>
+        </ul>
+      </article>
+      <article class="bubble"><p>Hacemos un montón de cosas copadas — estos son algunos números:</p>
+        <dl class="grid stats"><div><dt>Años en el mercado</dt><dd>10+</dd></div><div><dt>Clientes en el mundo</dt><dd>40+</dd></div><div><dt>Profesionales</dt><dd>30+</dd></div></dl>
+        <ul class="grid logos"><li>Consultatio</li><li>Tecnovoz</li><li>INDEC</li><li>Puig</li><li>Megatlon</li><li>TopDoctors</li><li>Banks</li><li>SAP</li></ul>
+      </article>
+      <article class="bubble"><p>Bueno, ¡eso somos nosotros! Contame qué necesitás y te propongo el mejor camino.</p></article>
+    </section>
+
+    <form id="prompt" class="prompt">
+      <label for="msg" class="sr-only">Mensaje</label>
+      <span>&gt;_</span>
+      <input id="msg" maxlength="1000" placeholder="Pregúntame sobre servicios, academy o casos reales" required>
+      <button type="submit">Enviar</button>
+    </form>
+  </main>
+
+  <script src="/app.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+@page "/"
+@inject ApiClient Api
+@using System.Text.Json
+@using CmPlatform.Frontend.Services
+
+<MudText Typo="Typo.h4">Dashboard</MudText>
+<MudText Class="mb-4" Typo="Typo.body2">Resumen de actividad del Community Manager</MudText>
+
+<MudGrid>
+    <MudItem xs="12" sm="6" md="3">
+        <MudPaper Class="pa-4" Elevation="2">
+            <MudText Typo="Typo.h6">Clientes</MudText>
+            <MudText Typo="Typo.h3" Color="Color.Primary">@totalClients</MudText>
+        </MudPaper>
+    </MudItem>
+    <MudItem xs="12" sm="6" md="3">
+        <MudPaper Class="pa-4" Elevation="2">
+            <MudText Typo="Typo.h6">Publicaciones</MudText>
+            <MudText Typo="Typo.h3" Color="Color.Secondary">@totalPublications</MudText>
+        </MudPaper>
+    </MudItem>
+    <MudItem xs="12" sm="6" md="3">
+        <MudPaper Class="pa-4" Elevation="2">
+            <MudText Typo="Typo.h6">Pendientes</MudText>
+            <MudText Typo="Typo.h3" Color="Color.Warning">@pendingPublications</MudText>
+        </MudPaper>
+    </MudItem>
+    <MudItem xs="12" sm="6" md="3">
+        <MudPaper Class="pa-4" Elevation="2">
+            <MudText Typo="Typo.h6">Facturas</MudText>
+            <MudText Typo="Typo.h3" Color="Color.Info">@totalInvoices</MudText>
+        </MudPaper>
+    </MudItem>
+</MudGrid>
+
+@code {
+    private int totalClients;
+    private int totalPublications;
+    private int pendingPublications;
+    private int totalInvoices;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            totalClients = (await Api.GetFromJsonAsync<JsonElement[]>("api/clients"))?.Length ?? 0;
+            var all = await Api.GetFromJsonAsync<JsonElement[]>("api/publications");
+            if (all is not null)
+            {
+                totalPublications = all.Length;
+                pendingPublications = all.Count(p => p.TryGetProperty("status", out var s) && s.GetString() == "draft");
+            }
+            var invoices = await Api.GetFromJsonAsync<JsonElement[]>("api/billing/invoices");
+            totalInvoices = invoices?.Length ?? 0;
+        }
+        catch
+        {
+        }
+    }
+}

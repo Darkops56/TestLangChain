@@ -1,0 +1,83 @@
+@page "/clients"
+@inject ApiClient Api
+@using System.Text.Json
+@using CmPlatform.Frontend.Services
+
+<MudText Typo="Typo.h4">Clientes</MudText>
+<MudText Class="mb-4" Typo="Typo.body2">Gesti&oacute;n de clientes y cuentas sociales</MudText>
+
+<MudToolBar Class="mb-4">
+    <MudTextField @bind-Value="search" Placeholder="Buscar por nombre o email..." Variant="Variant.Outlined" Dense="true" Immediate="true" Class="flex-grow-1" />
+    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@(() => Nav.NavigateTo("/clients/new"))">
+        + Nuevo Cliente
+    </MudButton>
+</MudToolBar>
+
+<MudTable Items="@filteredClients" Dense="true" Hover="true" Breakpoint="Breakpoint.Sm">
+    <HeaderContent>
+        <MudTh>Nombre</MudTh>
+        <MudTh>Email</MudTh>
+        <MudTh>Tel&eacute;fono</MudTh>
+        <MudTh>Empresa</MudTh>
+        <MudTh>Plan</MudTh>
+        <MudTh>Acciones</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Nombre">
+            <MudText Typo="Typo.body2" Class="mud-primary-text" Style="cursor:pointer" OnClick="@(() => Nav.NavigateTo($"/clients/{GetString(context, "id")}"))">@GetString(context, "name")</MudText>
+        </MudTd>
+        <MudTd DataLabel="Email">@GetString(context, "email")</MudTd>
+        <MudTd DataLabel="Tel&eacute;fono">@GetString(context, "phone")</MudTd>
+        <MudTd DataLabel="Empresa">@GetString(context, "company")</MudTd>
+        <MudTd DataLabel="Plan">
+            <MudBadge Color="@(GetString(context, "subscriptionStatus") == "active" ? Color.Success : Color.Default)">
+                @(GetString(context, "subscriptionStatus") is { Length: >0 } s ? s : "sin plan")
+            </MudBadge>
+        </MudTd>
+        <MudTd DataLabel="Acciones">
+            <MudIconButton Icon="@Icons.Material.Filled.Delete" Size="Size.Small" Color="Color.Error" OnClick="@(() => DeleteClient(GetString(context, "id")))" />
+        </MudTd>
+    </RowTemplate>
+</MudTable>
+
+@code {
+    [Inject] private NavigationManager Nav { get; set; } = null!;
+
+    private List<JsonElement> clients = [];
+    private string search = "";
+
+    private List<JsonElement> filteredClients =>
+        string.IsNullOrWhiteSpace(search)
+            ? clients
+            : clients.Where(c =>
+            {
+                var name = GetString(c, "name");
+                var email = GetString(c, "email");
+                return name.Contains(search, StringComparison.OrdinalIgnoreCase)
+                    || email.Contains(search, StringComparison.OrdinalIgnoreCase);
+            }).ToList();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadClients();
+    }
+
+    private async Task LoadClients()
+    {
+        try
+        {
+            var arr = await Api.GetFromJsonAsync<JsonElement[]>("api/clients");
+            clients = arr?.ToList() ?? [];
+        }
+        catch { }
+    }
+
+    private async Task DeleteClient(string id)
+    {
+        await Api.DeleteAsync($"api/clients/{id}");
+        await LoadClients();
+    }
+
+    private static string GetString(JsonElement el, string prop) =>
+        el.TryGetProperty(prop, out var p) ? p.GetString() ?? "" : "";
+}

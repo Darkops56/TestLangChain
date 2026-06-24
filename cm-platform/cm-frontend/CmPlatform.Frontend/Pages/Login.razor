@@ -1,0 +1,81 @@
+@page "/login"
+@inject ApiClient Api
+@inject AuthService Auth
+@inject NavigationManager Navigation
+@using CmPlatform.Frontend.Services
+
+<MudContainer MaxWidth="MaxWidth.Small" Class="mt-16">
+    <MudPaper Class="pa-8" Elevation="4">
+        <MudText Typo="Typo.h4" Align="Align.Center" Class="mb-4">CM Platform</MudText>
+        <MudText Typo="Typo.body2" Align="Align.Center" Class="mb-6">Ingres&aacute; tu email para acceder</MudText>
+
+        <MudTextField @bind-Value="email" Label="Email" Required="true" Immediate="true" />
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" FullWidth="true" Class="mt-4" OnClick="@LoginAsync" Disabled="@loading">
+            @(loading ? "Ingresando..." : "Ingresar")
+        </MudButton>
+
+        @if (!string.IsNullOrEmpty(error))
+        {
+            <MudAlert Severity="Severity.Error" Class="mt-4">@error</MudAlert>
+        }
+
+        <MudText Typo="Typo.body2" Align="Align.Center" Class="mt-4">
+            <a href="/register">Registrarse</a>
+        </MudText>
+    </MudPaper>
+</MudContainer>
+
+@code {
+    private string email = "";
+    private string error = "";
+    private bool loading;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Auth.InitAsync();
+        if (Auth.IsLoggedIn)
+            Navigation.NavigateTo("/");
+    }
+
+    private async Task LoginAsync()
+    {
+        if (string.IsNullOrWhiteSpace(email))
+        {
+            error = "Ingres&aacute; un email";
+            return;
+        }
+
+        loading = true;
+        error = "";
+
+        try
+        {
+            var response = await Api.PostAsJsonAsync("api/auth/login", new { email });
+            if (!response.IsSuccessStatusCode)
+            {
+                error = "Email no encontrado";
+                return;
+            }
+
+            var result = await response.Content.ReadFromJsonAsync<LoginResponse>();
+            if (result?.token is not null)
+            {
+                await Auth.SetTokenAsync(result.token);
+                Navigation.NavigateTo("/");
+            }
+        }
+        catch (Exception ex)
+        {
+            error = $"Error de conexi&oacute;n: {ex.Message}";
+        }
+        finally
+        {
+            loading = false;
+        }
+    }
+
+    private class LoginResponse
+    {
+        public string? token { get; set; }
+    }
+}

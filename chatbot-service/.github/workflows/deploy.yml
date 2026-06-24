@@ -1,0 +1,134 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.2.0
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
+          META_ACCESS_TOKEN: ${{ secrets.META_ACCESS_TOKEN }}
+          META_INSTAGRAM_ACCOUNT_ID: ${{ secrets.META_INSTAGRAM_ACCOUNT_ID }}
+          META_APP_SECRET: ${{ secrets.META_APP_SECRET }}
+          AZURE_FOUNDRY_MEDIA_API_KEY: ${{ secrets.AZURE_FOUNDRY_MEDIA_API_KEY }}
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          envs: GH_PAT,META_ACCESS_TOKEN,META_INSTAGRAM_ACCOUNT_ID,META_APP_SECRET,AZURE_FOUNDRY_MEDIA_API_KEY
+          script: |
+            set -e
+
+            REPO_DIR=~/web-novit-ai
+            REPO_URL="https://github.com/${{ github.repository }}.git"
+
+            # Configure git credentials using a temporary store so the token
+            # is never embedded in remote URLs or visible in process listings
+            CRED_FILE=$(mktemp)
+            echo "https://x-access-token:${GH_PAT}@github.com" > "$CRED_FILE"
+            git config --global credential.helper "store --file $CRED_FILE"
+            trap 'rm -f "$CRED_FILE"; git config --global --unset credential.helper || true' EXIT
+
+            # Clone or pull latest code
+            if [ -d "$REPO_DIR/.git" ]; then
+              cd "$REPO_DIR"
+              git remote set-url origin "$REPO_URL"
+              git fetch origin || { echo "ERROR: git fetch failed"; exit 1; }
+              git reset --hard origin/${{ github.ref_name }}
+            elif [ -d "$REPO_DIR" ]; then
+              cd "$REPO_DIR"
+              git init
+              git remote add origin "$REPO_URL"
+              git fetch origin || { echo "ERROR: git fetch failed"; exit 1; }
+              git reset --hard origin/${{ github.ref_name }}
+            else
+              git clone "$REPO_URL" "$REPO_DIR" || { echo "ERROR: git clone failed"; exit 1; }
+              cd "$REPO_DIR"
+              git checkout ${{ github.ref_name }}
+            fi
+
+            # Verify .env exists
+            if [ ! -f .env ]; then
+              echo "WARNING: .env file not found â€” services will run with stub fallbacks"
+            else
+              if grep -q '^Nurturing__RecipientOverride=' .env; then
+                sed -i 's/^Nurturing__RecipientOverride=.*/Nurturing__RecipientOverride=/' .env
+              else
+                printf '\nNurturing__RecipientOverride=\n' >> .env
+              fi
+            fi
+
+            python3 - <<'PY'
+            import os
+            from pathlib import Path
+
+            env_path = Path('.env')
+            if not env_path.exists():
+                env_path.touch()
+
+            updates = {
+                'META_ACCESS_TOKEN': os.getenv('META_ACCESS_TOKEN'),
+                'META_INSTAGRAM_ACCOUNT_ID': os.getenv('META_INSTAGRAM_ACCOUNT_ID'),
+                'META_APP_SECRET': os.getenv('META_APP_SECRET'),
+                'AZURE_FOUNDRY_DALLE_ENDPOINT': 'https://rodri-mobw5zq6-eastus2.services.ai.azure.com',
+                'AZURE_FOUNDRY_DALLE_API_KEY': os.getenv('AZURE_FOUNDRY_MEDIA_API_KEY'),
+              'AZURE_FOUNDRY_DALLE_DEPLOYMENT': 'gpt-image-1-5',
+                'AZURE_FOUNDRY_DALLE_API_VERSION': '2025-04-01-preview',
+              'AZURE_FOUNDRY_DALLE_15_ENDPOINT': 'https://rodri-mobw5zq6-eastus2.services.ai.azure.com',
+              'AZURE_FOUNDRY_DALLE_15_API_KEY': os.getenv('AZURE_FOUNDRY_MEDIA_API_KEY'),
+              'AZURE_FOUNDRY_DALLE_15_DEPLOYMENT': 'gpt-image-1-5',
+              'AZURE_FOUNDRY_DALLE_15_API_VERSION': '2025-04-01-preview',
+              'AZURE_FOUNDRY_DALLE_2_ENDPOINT': 'https://rodri-mobw5zq6-eastus2.services.ai.azure.com',
+              'AZURE_FOUNDRY_DALLE_2_API_KEY': os.getenv('AZURE_FOUNDRY_MEDIA_API_KEY'),
+              'AZURE_FOUNDRY_DALLE_2_DEPLOYMENT': 'gpt-image-2',
+              'AZURE_FOUNDRY_DALLE_2_API_VERSION': '2025-04-01-preview',
+              'AZURE_FOUNDRY_LLM_RESPONDER_DEPLOYMENT': 'gpt-4o-mini',
+                'AZURE_FOUNDRY_SORA_ENDPOINT': 'https://rodri-mobw5zq6-eastus2.services.ai.azure.com',
+                'AZURE_FOUNDRY_SORA_API_KEY': os.getenv('AZURE_FOUNDRY_MEDIA_API_KEY'),
+                'AZURE_FOUNDRY_SORA_DEPLOYMENT': 'sora-2-1',
+            }
+
+            existing_lines = env_path.read_text(encoding='utf-8').splitlines()
+            written = set()
+            next_lines = []
+
+            for line in existing_lines:
+                if '=' not in line or line.lstrip().startswith('#'):
+                    next_lines.append(line)
+                    continue
+
+                key, _ = line.split('=', 1)
+                if key == 'DEFAULT_INSTAGRAM_IMAGE_URL':
+                  continue
+
+                value = updates.get(key)
+                if value is None or value == '':
+                    next_lines.append(line)
+                    continue
+
+                next_lines.append(f'{key}={value}')
+                written.add(key)
+
+            for key, value in updates.items():
+                if key in written or value is None or value == '':
+                    continue
+                next_lines.append(f'{key}={value}')
+
+            env_path.write_text('\n'.join(next_lines).rstrip() + '\n', encoding='utf-8')
+            print('Updated shared .env with GitHub Actions social and Azure media configuration')
+            PY
+
+            # Build and deploy (recreates only changed containers)
+            docker compose up --build -d || { echo "ERROR: docker compose up failed"; exit 1; }
+
+            # Verify containers are running
+            echo "=== Container status ==="
+            docker compose ps

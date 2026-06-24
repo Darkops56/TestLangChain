@@ -1,0 +1,37 @@
+# ============================================================
+# cm-platform/.env
+# Extraído del .env compartido original — SOLO vars del CM
+# ============================================================
+
+# PostgreSQL (CM DB — multitenant)
+POSTGRES_PASSWORD=your-secure-password-here
+ConnectionStrings__DefaultConnection=Host=db;Port=5432;Database=novit_cm;Username=novit;Password=your-secure-password-here
+
+# Azure AI Foundry (GPT-4o / GPT-5.4 — generación de contenido CM)
+AIFoundryDeployment=https://your-resource.openai.azure.com/openai/deployments/your-deployment/chat/completions?api-version=2025-01-01-preview
+AIFoundryKey=your-foundry-key-here
+
+# Azure AI Foundry — Complex model for content generation
+CM__ContentAIDeployment=https://your-resource.openai.azure.com/openai/deployments/your-complex-deployment/chat/completions?api-version=2025-01-01-preview
+CM__ContentAIKey=your-content-ai-key-here
+
+# Internal API key (auth entre cm-agent y cm-backend)
+INTERNAL_API_KEY=your-internal-api-key-here
+
+# JWT Secret para auth del frontend Blazor
+JWT__Secret=your-jwt-secret-here
+JWT__Issuer=cm-platform
+JWT__Audience=cm-frontend
+JWT__ExpirationHours=24
+
+# Stripe / Mercado Pago (facturación)
+Billing__Provider=stripe
+Billing__StripeSecretKey=your-stripe-secret-key-here
+Billing__StripeWebhookSecret=your-stripe-webhook-secret-here
+
+# SMTP para notificaciones del CM
+SMTP__Host=smtp.gmail.com
+SMTP__Port=587
+SMTP__User=cm@novitsoftware.com
+SMTP__Password=your-smtp-password-here
+SMTP__From=cm@novitsoftware.com

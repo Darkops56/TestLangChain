@@ -1,0 +1,12 @@
+FROM python:3.12-slim
+
+WORKDIR /app
+
+COPY requirements-mock.txt .
+RUN pip install --no-cache-dir -r requirements-mock.txt
+
+COPY mock_agent.py .
+
+EXPOSE 8000
+
+CMD ["python", "mock_agent.py"]

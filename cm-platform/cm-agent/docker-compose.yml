@@ -1,0 +1,11 @@
+version: "3.8"
+
+services:
+  cm-agent-mock:
+    build:
+      context: .
+      dockerfile: Dockerfile.mock
+    ports:
+      - "8000:8000"
+    env_file: .env.mock
+    command: python mock_agent.py
