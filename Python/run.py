@@ -10,7 +10,7 @@ def check_keys():
     """
     Verifica si las claves de API necesarias están configuradas.
     """
-    google_key = os.getenv("GOOGLE_API_KEY") or os.getenv("GEMINI_API_KEY")
+    google_key = os.getenv("GOOGLE_API_KEY") or os.getenv("GEMINI_API_KEY") or os.getenv("GEMINI_KEY")
     openai_key = os.getenv("OPENAI_API_KEY")
     
     if not google_key and not openai_key:
@@ -55,6 +55,8 @@ def main():
     # Asegurar compatibilidad de variables de entorno de autenticación
     if "GEMINI_API_KEY" in os.environ and "GOOGLE_API_KEY" not in os.environ:
         os.environ["GOOGLE_API_KEY"] = os.environ["GEMINI_API_KEY"].strip().strip('"').strip("'")
+    if "GEMINI_KEY" in os.environ and "GOOGLE_API_KEY" not in os.environ:
+        os.environ["GOOGLE_API_KEY"] = os.environ["GEMINI_KEY"].strip().strip('"').strip("'")
 
     # Asegurar la existencia de la carpeta de imágenes
     os.makedirs(os.path.abspath(os.path.join(os.path.dirname(__file__), "output_images")), exist_ok=True)

@@ -94,14 +94,43 @@ def generar_imagen(prompt: str, plat: str) -> str:
     Caso contrario, utiliza Pillow para generar una imagen local descriptiva de fallback.
     Retorna la ruta absoluta del archivo generado.
     """
-    output_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../output_images"))
+    output_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../images"))
     os.makedirs(output_dir, exist_ok=True)
     
     timestamp = int(time.time() * 1000)
     filename = f"{plat}_{timestamp}.png"
     file_path = os.path.join(output_dir, filename)
     
-    # 1. Intentar con OpenAI DALL-E si existe una key configurada
+    # 1. Intentar con Replicate si existe una key configurada (Prioridad sobre DALL-E)
+    replicate_key = os.getenv("REPLICATE_KEY") or os.getenv("REPLICATE_API_TOKEN")
+    if replicate_key and replicate_key != "mock_api_key_for_testing":
+        try:
+            print(f"[generar_imagen] Intentando generación real con Replicate para {plat}...")
+            # Asegurar propagación de clave
+            os.environ["REPLICATE_API_TOKEN"] = replicate_key
+            from src.image_generator import generate_image_replicate
+            
+            # Mapear relaciones de aspecto por plataforma
+            plat_lower = plat.lower()
+            if "tiktok" in plat_lower:
+                aspect_ratio = "9:16"
+            elif "gmail" in plat_lower:
+                aspect_ratio = "16:9"
+            else:
+                aspect_ratio = "1:1"
+                
+            res = generate_image_replicate(
+                prompt=prompt,
+                aspect_ratio=aspect_ratio,
+                plat=plat
+            )
+            if res.get("local_paths"):
+                print(f"[generar_imagen] Imagen real de Replicate guardada exitosamente en {res['local_paths'][0]}")
+                return res["local_paths"][0]
+        except Exception as e:
+            print(f"[generar_imagen] Falló Replicate ({e}). Continuando con otros proveedores...")
+
+    # 2. Intentar con OpenAI DALL-E si existe una key configurada
     openai_key = os.getenv("OPENAI_API_KEY")
     if openai_key and openai_key != "mock_api_key_for_testing":
         try:
@@ -125,7 +154,7 @@ def generar_imagen(prompt: str, plat: str) -> str:
         except Exception as e:
             print(f"[generar_imagen] Falló DALL-E 3 ({e}). Continuando con fallback local...")
             
-    # 2. Fallback de diseño estético local utilizando Pillow (PIL)
+    # 3. Fallback de diseño estético local utilizando Pillow (PIL)
     try:
         from PIL import Image, ImageDraw
         print(f"[generar_imagen] Generando imagen de fallback estético (Pillow) para {plat}...")

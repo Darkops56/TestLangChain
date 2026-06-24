@@ -24,6 +24,8 @@ os.environ["GOOGLE_API_VERSION"] = "v1"
 # Asegurar compatibilidad de variables de entorno de autenticación
 if "GEMINI_API_KEY" in os.environ and "GOOGLE_API_KEY" not in os.environ:
     os.environ["GOOGLE_API_KEY"] = os.environ["GEMINI_API_KEY"].strip().strip('"').strip("'")
+if "GEMINI_KEY" in os.environ and "GOOGLE_API_KEY" not in os.environ:
+    os.environ["GOOGLE_API_KEY"] = os.environ["GEMINI_KEY"].strip().strip('"').strip("'")
 
 # Clave mock para entornos de prueba
 if not os.getenv("GOOGLE_API_KEY"):
@@ -137,7 +139,7 @@ def invoke_with_fallback(prompt_sistema: str, prompt_human: str, schema) -> Mult
         errors.append(error_msg)
 
     # 2. Intentar con Gemini (fallback)
-    google_key = os.getenv("GOOGLE_API_KEY") or os.getenv("GEMINI_API_KEY")
+    google_key = os.getenv("GOOGLE_API_KEY") or os.getenv("GEMINI_API_KEY") or os.getenv("GEMINI_KEY")
     if google_key and google_key != "mock_api_key_for_testing":
         try:
             print("[INFO] Intentando generación estructurada con Gemini (models/gemini-2.5-flash)...")
@@ -321,43 +323,39 @@ def generator_node(state: MultiPlatformState) -> dict:
             dict_respuesta["whatsapp"] = resultado.whatsapp
             
     except Exception as e:
-        print(f"[WARN] Error en la generación estructurada: {e}. Usando fallback de Ollama local...")
+        print(f"[WARN] Error en la generación estructurada: {e}. Usando fallback de LLM plano...")
         dict_respuesta = {}
-        try:
-            # Usar el modelo local para generar el texto plano de fallback con temperatura 0.0
-            llm_plano = Ollama(
-                model="gemma4:e2b",
-                temperature=0.0,
+
+        def _generar_plano(llm, plat, user_prompt):
+            prompt_fb = (
+                f"Genera un texto de marketing corto en español para {plat.upper()} "
+                f"sobre el tema: '{user_prompt}'. "
+                f"Debe incluir la palabra 'IA'. "
+                f"Si es para TikTok o Instagram, incluye hashtags (#). "
+                f"Devuelve solo el texto limpio sin comentarios ni formato."
             )
-            for plat in platforms_to_generate:
-                prompt_fb = (
-                    f"Genera un texto de marketing corto en español para {plat.upper()} "
-                    f"sobre el tema: '{state['user_prompt']}'. "
-                    f"Debe incluir la palabra 'IA'. "
-                    f"Si es para TikTok o Instagram, incluye hashtags (#). "
-                    f"Devuelve solo el texto limpio sin comentarios ni formato."
-                )
-                # Comprimir y trackear tokens también en fallback
-                fb_msgs = compress_messages([("human", prompt_fb)])
-                fb_prompt = fb_msgs[0][1] if fb_msgs else prompt_fb
-                text_fb = llm_plano.invoke(fb_prompt).strip()
-                log_llm_invocation(text_fb)
-                
-                # También generar el prompt de imagen
-                prompt_img_fb = (
-                    f"Write a 1-sentence image description in English for a post about: '{state['user_prompt']}'"
-                )
-                img_msgs = compress_messages([("human", prompt_img_fb)])
-                img_prompt = img_msgs[0][1] if img_msgs else prompt_img_fb
-                img_prompt_fb = llm_plano.invoke(img_prompt).strip()
-                log_llm_invocation(img_prompt_fb)
-                
-                dict_respuesta[plat] = SinglePlatformOutput(
-                    text=text_fb,
-                    image_prompt=img_prompt_fb
-                )
-        except Exception as ollama_err:
-            print(f"[WARN] Falló la generación local con Ollama: {ollama_err}. Usando fallback estático.")
+            fb_msgs = compress_messages([("human", prompt_fb)])
+            fb_prompt = fb_msgs[0][1] if fb_msgs else prompt_fb
+            text_fb = llm.invoke(fb_prompt)
+            if hasattr(text_fb, 'content'):
+                text_fb = text_fb.content
+            text_fb = text_fb.strip()
+            log_llm_invocation(text_fb)
+
+            prompt_img_fb = (
+                f"Write a 1-sentence image description in English for a post about: '{user_prompt}'"
+            )
+            img_msgs = compress_messages([("human", prompt_img_fb)])
+            img_prompt = img_msgs[0][1] if img_msgs else prompt_img_fb
+            img_prompt_fb = llm.invoke(img_prompt)
+            if hasattr(img_prompt_fb, 'content'):
+                img_prompt_fb = img_prompt_fb.content
+            img_prompt_fb = img_prompt_fb.strip()
+            log_llm_invocation(img_prompt_fb)
+
+            return SinglePlatformOutput(text=text_fb, image_prompt=img_prompt_fb)
+
+        def _fallback_estatico():
             for plat in platforms_to_generate:
                 text_fb = f"Contenido de fallback para {plat} sobre: {state['user_prompt']}. IA."
                 if plat in ["tiktok", "instagram"]:
@@ -366,6 +364,30 @@ def generator_node(state: MultiPlatformState) -> dict:
                     text=text_fb,
                     image_prompt=f"Ilustración digital sobre {state['user_prompt']}"
                 )
+
+        # 1. Intentar con Ollama local (gemma4:e2b) para texto plano
+        try:
+            print("[INFO] Intentando generación plana con Ollama local (gemma4:e2b)...")
+            llm_plano = Ollama(model="gemma4:e2b", temperature=0.0)
+            for plat in platforms_to_generate:
+                dict_respuesta[plat] = _generar_plano(llm_plano, plat, state['user_prompt'])
+        except Exception as ollama_err:
+            print(f"[WARN] Ollama local no disponible: {ollama_err}. Intentando con Gemini...")
+
+            # 2. Intentar con Gemini para texto plano
+            google_key = os.getenv("GOOGLE_API_KEY") or os.getenv("GEMINI_API_KEY") or os.getenv("GEMINI_KEY")
+            if google_key and google_key != "mock_api_key_for_testing":
+                try:
+                    print("[INFO] Intentando generación plana con Gemini (models/gemini-2.5-flash)...")
+                    llm_plano = ChatGoogleGenerativeAI(model="models/gemini-2.5-flash", temperature=0.0)
+                    for plat in platforms_to_generate:
+                        dict_respuesta[plat] = _generar_plano(llm_plano, plat, state['user_prompt'])
+                except Exception as gemini_err:
+                    print(f"[WARN] Gemini no disponible para generación plana: {gemini_err}. Usando fallback estático.")
+                    _fallback_estatico()
+            else:
+                print("[WARN] No hay clave Gemini configurada. Usando fallback estático.")
+                _fallback_estatico()
 
     # Actualizar salidas manteniendo las aprobadas anteriormente intactas
     outputs_actualizados = dict(outputs)
